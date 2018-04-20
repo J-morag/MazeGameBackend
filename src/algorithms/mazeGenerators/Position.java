@@ -16,16 +16,16 @@ public class Position
 	 * column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
 	 */
 	
-	private int colomn;
+	private int column;
 
 	/**
 	 * constructor.
 	 * @param row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
-	 * @param colomn - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
+	 * @param column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
 	 */
-	public Position(int row, int colomn){
+	public Position(int row, int column){
 		this.row=row;
-		this.colomn=colomn;
+		this.column = column;
 	}
 
 	/**
@@ -33,7 +33,8 @@ public class Position
 	 * @param position - the Position to copy.
 	 */
 	public Position(Position position) {
-		return; new Position(position.row, position.colomn);
+		this.row=position.row;
+		this.column =position.column;
 	}
 
 	/**
@@ -49,7 +50,7 @@ public class Position
 	 */
 	
 	public int getColomnIndex() {
-		return colomn;
+		return column;
 	}
 
 	/**
@@ -57,7 +58,7 @@ public class Position
 	 */
 	@Override
 	public String toString() {
-		return String.format("{%s,%s}", row, colomn);
+		return String.format("{%s,%s}", row, column);
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class Position
 	public boolean equals(Object pos){
 		if (null == pos) return false;
 		if (!(pos instanceof  Position)) return false;
-		if (row==((Position) pos).row && colomn==((Position) pos).colomn) return true;
+		if (row==((Position) pos).row && column ==((Position) pos).column) return true;
 		else return false;
 	}
 
