@@ -1,74 +1,76 @@
 package algorithms.mazeGenerators;
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * Position describes a position in a maze.
  */
 
 public class Position
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
 	 */
 	
 	private int row;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
 	 */
 	
 	private int colomn;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
+	 * constructor.
+	 * @param row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
+	 * @param colomn - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
 	 */
-	public Position(){
-		super();
+	public Position(int row, int colomn){
+		this.row=row;
+		this.colomn=colomn;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * copy constructor.
+	 * @param position - the Position to copy.
+	 */
+	public Position(Position position) {
+		return; new Position(position.row, position.colomn);
+	}
+
+	/**
+	 * returns the row index.
 	 */
 	
 	public int getRowIndex() {
-		// TODO implement me
-		return 0;
+		return row;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * returns the column index.
 	 */
 	
 	public int getColomnIndex() {
-		// TODO implement me
-		return 0;
+		return colomn;
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * toString override.
 	 */
-	
-	public String ToString() {
-		// TODO implement me
-		return "";
+	@Override
+	public String toString() {
+		return String.format("{%s,%s}", row, colomn);
+	}
+
+	/**
+	 *
+	 * @param pos - position to compare to
+	 * @return - true if they are equal
+	 */
+	@Override
+	public boolean equals(Object pos){
+		if (null == pos) return false;
+		if (!(pos instanceof  Position)) return false;
+		if (row==((Position) pos).row && colomn==((Position) pos).colomn) return true;
+		else return false;
 	}
 
 }
