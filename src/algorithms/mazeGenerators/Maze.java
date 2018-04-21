@@ -103,15 +103,22 @@ public class Maze
 		int sColumn = startPosition.getColomnIndex();
 		int eRow = goalPosition.getRowIndex();
 		int eColumn = goalPosition.getColomnIndex();
+		for (int j=0; j<mazeMap.length ; j++) System.out.print('_');
+		System.out.println("");
 		for (int i=0; i<mazeMap.length ; i++){
+			System.out.print("|");
 			for (int j=0; j<mazeMap.length ; j++){
 				if(i==sRow && j==sColumn) System.out.print('S');
 				else if(i==eRow && j==eColumn) System.out.print('E');
-				else if(0 == mazeMap[i][j]) System.out.print('░');
-				else System.out.print('█');
+				//else if(0 == mazeMap[i][j]) System.out.print('░');
+				else if(0 == mazeMap[i][j]) System.out.print(" ");
+				//else System.out.print('█');
+				else System.out.print('1');
 			}
-			System.out.println("");
+			System.out.println("|");
 		}
+		for (int j=0; j<mazeMap.length ; j++) System.out.print('_');
+		System.out.println("");
 	}
 
 }
