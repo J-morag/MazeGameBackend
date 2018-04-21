@@ -1,31 +1,28 @@
 package algorithms.mazeGenerators;
 
-//testest
 
 /**
- * <!-- begin-user-doc -->
- * <!--  end-user-doc  -->
- * @generated
+ * An interface of maze generator.
  */
-public  interface IMazeGenerator 
+public  interface IMazeGenerator
 {
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * Creates a new maze.
+	 * @param numOfRows - the required number of rows in the maze.
+	 * @param numOfColumns - the required number of columns in the maze.
+	 * @return - not implemented in the interface - no return.
 	 */
 	
-	public Maze generate() ;
+	public Maze generate(int numOfRows, int numOfColumns) ;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
+	 * Measures the operating time of the 'generate' method.
+	 * @param numOfRows - the required number of rows in the maze.
+	 * @param numOfColumns - the required number of columns in the maze.
+	 * @return - not implemented in the interface - no return.
 	 */
 	
-	public int measureAlgorithmTimeMillis() ;
+	public long measureAlgorithmTimeMillis(int numOfRows, int numOfColumns) ;
 
 
 }
