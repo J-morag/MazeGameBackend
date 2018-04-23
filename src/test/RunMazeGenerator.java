@@ -4,16 +4,16 @@ import algorithms.mazeGenerators.*;
 
 public class RunMazeGenerator {
     public static void main(String[] args) {
-        testMazeGenerator(new SimpleMazeGenerator());
+        //testMazeGenerator(new SimpleMazeGenerator());
         testMazeGenerator(new MyMazeGenerator());
     }
 
     private static void testMazeGenerator(IMazeGenerator mazeGenerator) {
         // prints the time it takes the algorithm to run
         System.out.println(String.format("Maze generation time(ms): %s",
-                mazeGenerator.measureAlgorithmTimeMillis(100, 100)));
+                mazeGenerator.measureAlgorithmTimeMillis(1000, 1000)));
         // generate another maze
-        Maze maze = mazeGenerator.generate(100, 100);
+        Maze maze = mazeGenerator.generate(1000, 1000);
         // prints the maze
         maze.print();
         // get the maze entrance

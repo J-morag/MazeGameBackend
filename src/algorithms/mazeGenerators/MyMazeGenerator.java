@@ -103,49 +103,57 @@ public class MyMazeGenerator extends AMazeGenerator
             return false;
         else return true;
     }
-	private List<Position> getFrontiers (int[][] mazeMap, Position cell) {
-		//check validity of the given position
-		if (!isValidPosition(mazeMap,cell))
-			throw new IllegalArgumentException("cell position is out of bounds of the maze");
+    //looking for frontiers of 'cell' - a frontier is a wall with a distance of 2
+    private List<Position> getFrontiers (int[][] mazeMap, Position cell) {
+        //check validity of the given position
+        if (!isValidPosition(mazeMap,cell))
+            throw new IllegalArgumentException("cell position is out of bounds of the maze");
 
-		List<Position> frontiers = new ArrayList<>();
+        List<Position> frontiers = new ArrayList<>();
+        int rowCell = cell.getRowIndex();
+        int colCell = cell.getColomnIndex();
 
-		for (int row = 0; row < mazeMap.length; row++) {
-			for (int col = 0; col < mazeMap[0].length; col++) {
-				//check if the current position is a frontier of 'cell' - a wall with a distance of 2
-				if (mazeMap[row][col] == 1) { //a wall
-					if ((row == cell.getRowIndex() && Math.abs(col - cell.getColomnIndex()) == 2) //on the right or on the left
-							|| col == cell.getColomnIndex() && Math.abs(row - cell.getRowIndex()) == 2) //above or below
-					{
-						frontiers.add(new Position(row, col));
-					}
-				}
-			}
-		}
-		return frontiers;
-	}
+        //on the right
+        if(colCell+2 < mazeMap[0].length && mazeMap[rowCell][colCell+2] == 1)
+            frontiers.add(new Position(rowCell, (colCell+2)));
+        //on the left
+        if(colCell-2 >= 0 && mazeMap[rowCell][colCell-2] == 1)
+            frontiers.add(new Position(rowCell, (colCell-2)));
+        //below the cell
+        if(rowCell+2 < mazeMap.length && mazeMap[rowCell+2][colCell] == 1)
+            frontiers.add(new Position((rowCell+2), colCell));
+        //above the cell
+        if(rowCell-2 >= 0 && mazeMap[rowCell-2][colCell] == 1)
+            frontiers.add(new Position((rowCell-2), colCell));
 
-	private List<Position> getNeighbors (int[][] mazeMap, Position cell) {
-		//check validity of the position
-		if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColomnIndex() < 0 || cell.getColomnIndex() > mazeMap[0].length)
-			throw new IllegalArgumentException("cell position is out of bounds of the maze");
+        return frontiers;
+    }
 
-		List<Position> neighbors = new ArrayList<>();
+    //looking for neighbors of 'cell' - a neighbor is a passage with a distance of 2
+    private List<Position> getNeighbors (int[][] mazeMap, Position cell) {
+        //check validity of the given position
+        if (!isValidPosition(mazeMap,cell))
+            throw new IllegalArgumentException("cell position is out of bounds of the maze");
 
-		for (int row = 0; row < mazeMap.length; row++) {
-			for (int col = 0; col < mazeMap[0].length; col++) {
-				//check if the current position is a neighbor of 'cell' - a passage with a distance of 2
-				if (mazeMap[row][col] == 0) { //a passage
-					if ((row == cell.getRowIndex() && Math.abs(col - cell.getColomnIndex()) == 2) //on the right or on the left
-							|| col == cell.getColomnIndex() && Math.abs(row - cell.getRowIndex()) == 2) //above or below
-					{
-						neighbors.add(new Position(row, col));
-					}
-				}
-			}
-		}
-		return neighbors;
-	}
+        List<Position> neighbors = new ArrayList<>();
+        int rowCell = cell.getRowIndex();
+        int colCell = cell.getColomnIndex();
+
+        //on the right
+        if(colCell+2 < mazeMap[0].length && mazeMap[rowCell][colCell+2] == 0)
+            neighbors.add(new Position(rowCell, (colCell+2)));
+        //on the left
+        if(colCell-2 >= 0 && mazeMap[rowCell][colCell-2] == 0)
+            neighbors.add(new Position(rowCell, (colCell-2)));
+        //below the cell
+        if(rowCell+2 < mazeMap.length && mazeMap[rowCell+2][colCell] == 0)
+            neighbors.add(new Position((rowCell+2), colCell));
+        //above the cell
+        if(rowCell-2 >= 0 && mazeMap[rowCell-2][colCell] == 0)
+            neighbors.add(new Position((rowCell-2), colCell));
+
+        return neighbors;
+    }
 
 	private int[][] connectFrontierToNeighbor (int[][] mazeMap, Position frontier, Position neighbor){
 		int rowBetween, columnBetween;
@@ -163,3 +171,4 @@ public class MyMazeGenerator extends AMazeGenerator
 		return mazeMap;
 	}
 }
+
