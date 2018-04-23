@@ -111,9 +111,9 @@ public class Maze
 				if(i==sRow && j==sColumn) System.out.print('S');
 				else if(i==eRow && j==eColumn) System.out.print('E');
 				//else if(0 == mazeMap[i][j]) System.out.print('░');
-				else if(0 == mazeMap[i][j]) System.out.print(" ");
+				else if(0 == mazeMap[i][j]) System.out.print("☐");
 				//else System.out.print('█');
-				else System.out.print('1');
+				else System.out.print('■');
 			}
 			System.out.println("|");
 		}

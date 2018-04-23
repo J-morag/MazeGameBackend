@@ -1,5 +1,7 @@
 package algorithms.mazeGenerators;
 
+import javafx.geometry.Pos;
+
 /**
  * An abstract class which represents a generator of maze.
  * implements an interface of maze generator.
@@ -48,6 +50,43 @@ public abstract class AMazeGenerator implements IMazeGenerator
 		afterGen = System.currentTimeMillis();
 
 		return (afterGen - beforeGen);
+	}
+
+	/**
+	 *
+	 * @param isStartPosition - true := start. false := end
+	 * @param mazeMap - the map to find positions on.
+	 * @return - a start position closest to the top, left. Or an end position closest to the bottom, right.
+	 */
+
+	protected Position getStartOrEndPosition(boolean isStartPosition, int[][] mazeMap){
+		Position result = null;
+		int numOfRows = mazeMap.length;
+		int numOfColumns = mazeMap[0].length;
+		boolean stop = false;
+		if (isStartPosition){
+			for(int i=0; !stop && i<numOfRows ; i++){ //will succeed as long as wall density is not very close to 1
+				for(int j=0; !stop && j<numOfColumns ; j++){
+					if (0 == mazeMap[i][j]){
+						result = new Position(i, j);
+						stop = true;
+					}
+				}
+			}
+		}
+		else {
+			for(int i=numOfRows-1; !stop && i>0 ; i--){
+				for(int j=numOfColumns-1; !stop && j>0 ; j--){
+					if (0 == mazeMap[i][j]){
+						result = new Position(i, j);
+						stop = true;
+					}
+				}
+			}
+		}
+
+		return result;
+
 	}
 
 }

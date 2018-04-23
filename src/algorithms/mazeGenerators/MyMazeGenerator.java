@@ -26,26 +26,9 @@ public class MyMazeGenerator extends AMazeGenerator
 		int[][] mazeMap = new int[numOfRows][numOfColumns];
 		mazeMap = getMapByPrim(mazeMap);
 
-		Position startPos = null;
-		Position endPos = null;
-		boolean stop = false;
-		for(int i=0; !stop && i<numOfRows ; i++){ //will succeed as long as wall density is not very close to 1
-			for(int j=0; !stop && j<numOfColumns ; j++){
-				if (0 == mazeMap[i][j]){
-					startPos = new Position(i, j);
-					stop = true;
-				}
-			}
-		}
-		stop = false;
-		for(int i=numOfRows-1; !stop && i>0 ; i--){
-			for(int j=numOfColumns-1; !stop && j>0 ; j--){
-				if (0 == mazeMap[i][j]){
-					endPos = new Position(i, j);
-					stop = true;
-				}
-			}
-		}
+		Position startPos = super.getStartOrEndPosition(true, mazeMap);
+		Position endPos = super.getStartOrEndPosition(false, mazeMap);
+
 		return new Maze(mazeMap, startPos, endPos);
 	}
 
