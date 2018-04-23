@@ -27,26 +27,8 @@ public class SimpleMazeGenerator extends AMazeGenerator
 	@Override
 	public Maze generate(int numOfRows, int numOfColumns) {
 		int[][] mazeMap = getMapWithRandomWalls(numOfRows, numOfColumns, 0.5);
-		Position startPos = null;
-		Position endPos = null;
-		boolean stop = false;
-		for(int i=0; !stop && i<numOfRows ; i++){ //will succeed as long as wall density is not very close to 1
-			for(int j=0; !stop && j<numOfColumns ; j++){
-				if (0 == mazeMap[i][j]){
-					startPos = new Position(i, j);
-					stop = true;
-				}
-			}
-		}
-		stop = false;
-		for(int i=numOfRows-1; !stop && i>0 ; i--){
-			for(int j=numOfColumns-1; !stop && j>0 ; j--){
-				if (0 == mazeMap[i][j]){
-					endPos = new Position(i, j);
-					stop = true;
-				}
-			}
-		}
+		Position startPos = super.getStartOrEndPosition(true, mazeMap);
+		Position endPos = super.getStartOrEndPosition(false, mazeMap);
 
 		makeAPath(mazeMap, startPos, endPos);
 
