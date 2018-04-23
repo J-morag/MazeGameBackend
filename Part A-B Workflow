@@ -1,0 +1,10 @@
+AState
+MazeState
+Solution
+ISearchable
+SearchableMaze
+ISearchingAlgorithm
+ASearchingAlgorithm
+  DFS
+  BFS
+  BestFirstSearch
