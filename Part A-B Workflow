@@ -1,0 +1,7 @@
+AState
+MazeState
+Solution
+ISearchable
+SearchableMaze
+ISearchingAlgorithm
+ASearchingAlgorithm
