@@ -5,3 +5,6 @@ ISearchable
 SearchableMaze
 ISearchingAlgorithm
 ASearchingAlgorithm
+  DFS
+  BFS
+  BestFirstSearch
