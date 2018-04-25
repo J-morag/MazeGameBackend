@@ -2,6 +2,7 @@ package algorithms.mazeGenerators;
 
 /**
  * Position describes a position in a maze.
+ * Is immutable.
  */
 
 public class Position
