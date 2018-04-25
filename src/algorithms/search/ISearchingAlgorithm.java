@@ -1,4 +1,6 @@
 package algorithms.search;
 
-public interface ISearchingAlgorithm {
+interface ISearchingAlgorithm {
+    Solution solve(ISearchable searchProblem);
+    int getNumberOfNodesEvaluated();
 }

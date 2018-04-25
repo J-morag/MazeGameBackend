@@ -2,11 +2,14 @@ package algorithms.search;
 
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
 
-    /**
-     * default constructor.
-     */
+    protected int numberOfNodesEvaluated;
+
     public ASearchingAlgorithm() {
+        this.numberOfNodesEvaluated = 0;
     }
 
-
+    @Override
+    public int getNumberOfNodesEvaluated() {
+        return numberOfNodesEvaluated;
+    }
 }

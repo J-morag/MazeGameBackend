@@ -1,9 +1,13 @@
 package algorithms.search;
 
-public interface ISearchable {
+import java.util.ArrayList;
 
-    public AState getStartState();
+interface ISearchable {
 
-    public AState getGoalState();
+    AState getStartState();
+
+    AState getGoalState();
+
+    ArrayList<AState> getAllPossibleStates();
 
 }
