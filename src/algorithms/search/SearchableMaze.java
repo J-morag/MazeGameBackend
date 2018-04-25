@@ -11,4 +11,16 @@ public class SearchableMaze implements ISearchable{
     public List<AState> getAllPossibleStates(){
         return null;
     }
+
+    // TODO not implemented
+    @Override
+    public AState getStartState() {
+        return null;
+    }
+
+    // TODO not implemented
+    @Override
+    public AState getGoalState() {
+        return null;
+    }
 }

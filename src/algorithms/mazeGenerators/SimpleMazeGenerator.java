@@ -26,7 +26,7 @@ public class SimpleMazeGenerator extends AMazeGenerator
 	 */
 	@Override
 	public Maze generate(int numOfRows, int numOfColumns) {
-		int[][] mazeMap = getMapWithRandomWalls(numOfRows, numOfColumns, 0.5);
+		int[][] mazeMap = getMapWithRandomWalls(numOfRows, numOfColumns, 0.6);
 		Position startPos = super.getStartOrEndPosition(true, mazeMap);
 		Position endPos = super.getStartOrEndPosition(false, mazeMap);
 
