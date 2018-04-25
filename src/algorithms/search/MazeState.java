@@ -35,4 +35,8 @@ public class MazeState extends AState{
     public String toString() {
         return position.toString();
     }
+
+    public Position getPosition() {
+        return position;
+    }
 }
