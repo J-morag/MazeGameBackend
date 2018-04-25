@@ -2,6 +2,8 @@ package algorithms.search;
 
 public interface ISearchable {
 
-    AState getStartState();
-    AState getGoalState();
+    public AState getStartState();
+
+    public AState getGoalState();
+
 }

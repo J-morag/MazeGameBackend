@@ -2,9 +2,12 @@ package algorithms.search;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the path from start position to goal position
+ */
 public class Solution {
 
-    ArrayList<AState> pathList;
+    private ArrayList<AState> pathList;
 
     public Solution() {
         this.pathList = new ArrayList<AState>() {};
@@ -26,5 +29,7 @@ public class Solution {
         return pathList.remove(0);
     }
 
-
+    public ArrayList<AState> getSolutionPath () {
+        return pathList;
+    }
 }
