@@ -12,7 +12,7 @@ public class SearchableMaze implements ISearchable{
     private MazeState startState;
     private MazeState goalState;
     private double heuristicDistance;
-    private ArrayList<MazeState> allPossibleStates;
+    private ArrayList<AState> allPossibleStates;
     private MazeState[][] mazeStatesMap;
 
     /**
@@ -21,7 +21,7 @@ public class SearchableMaze implements ISearchable{
     public SearchableMaze(Maze maze) {
         this.maze = maze;
         this.heuristicDistance = 0.0;
-        this.allPossibleStates = new ArrayList<MazeState>();
+        this.allPossibleStates = new ArrayList<AState>();
         this.mazeStatesMap = new MazeState[maze.getMazeMap().length][(maze.getMazeMap()[0]).length];
         //initialize start and goal states
         Position startPosition = maze.getStartPosition();
@@ -34,7 +34,7 @@ public class SearchableMaze implements ISearchable{
      * Creates states for each passage in the maze, and update it's successors
      * @return a list of all possible maze states
      */
-    public ArrayList<MazeState> getAllPossibleStates(){
+    public ArrayList<AState> getAllPossibleStates(){
         int[][] mazeMap = maze.getMazeMap();
 
         //create MazeStates for all the passages in the maze
@@ -88,8 +88,8 @@ public class SearchableMaze implements ISearchable{
 
     //update successors for all the MazeStates
     private void updateSuccessors (int[][] mazeMap) {
-        for (MazeState mState : allPossibleStates) {
-            Position statePosition = mState.getPosition();
+        for (AState mState : allPossibleStates) {
+            Position statePosition = ((MazeState)mState).getPosition();
             int rowPosition = statePosition.getRowIndex();
             int colPosition = statePosition.getColomnIndex();
 
