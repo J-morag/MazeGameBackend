@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents the path from start position to goal position
@@ -31,5 +32,15 @@ public class Solution {
 
     public ArrayList<AState> getSolutionPath () {
         return pathList;
+    }
+
+    @Override
+    public String toString() {
+        String ans = "";
+        for (AState state:
+             pathList) {
+            ans = ans + state.toString() + ", ";
+        }
+        return ans;
     }
 }

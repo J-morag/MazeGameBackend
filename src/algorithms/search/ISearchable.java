@@ -2,7 +2,7 @@ package algorithms.search;
 
 import java.util.ArrayList;
 
-interface ISearchable {
+public interface ISearchable {
 
     /**
      * @return the state of the start position
@@ -15,6 +15,6 @@ interface ISearchable {
      */
     AState getGoalState();
 
-    ArrayList<AState> getAllPossibleStates();
+    public ArrayList<AState> getAllPossibleStates();
 
 }

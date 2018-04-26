@@ -41,9 +41,9 @@ public class SearchableMaze implements ISearchable{
         for(int row=0; row < mazeMap.length; row++){
             for(int col=0; col < mazeMap[0].length; col++){
                 if(mazeMap[row][col] == 0) { //a passage
-                    MazeState mState = new MazeState(getHeuristicDistance(row, col), new Position(row, col));
+                    AState mState = new MazeState(getHeuristicDistance(row, col), new Position(row, col));
                     allPossibleStates.add(mState);
-                    mazeStatesMap[row][col] = mState;
+                    mazeStatesMap[row][col] = (MazeState)mState;
                 }
             }
         }
@@ -126,5 +126,11 @@ public class SearchableMaze implements ISearchable{
                     mState.getSuccessors().add(mazeStatesMap[rowPosition - 1][colPosition - 1]);
             }
         }
+    }
+
+    private boolean isValidPosition (int[][] mazeMap, Position cell){
+        if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColomnIndex() < 0 || cell.getColomnIndex() > mazeMap[0].length)
+            return false;
+        else return true;
     }
 }
