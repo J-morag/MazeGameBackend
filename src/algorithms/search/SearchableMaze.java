@@ -41,7 +41,7 @@ public class SearchableMaze implements ISearchable{
         for(int row=0; row < mazeMap.length; row++){
             for(int col=0; col < mazeMap[0].length; col++){
                 if(mazeMap[row][col] == 0) { //a passage
-                    MazeState mState = new MazeState(getHeuristicDistance(row,col), new Position(row,col));
+                    MazeState mState = new MazeState(getHeuristicDistance(row, col), new Position(row, col));
                     allPossibleStates.add(mState);
                     mazeStatesMap[row][col] = mState;
                 }
