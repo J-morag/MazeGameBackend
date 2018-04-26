@@ -1,4 +1,4 @@
 package algorithms.search;
 
-public class DepthFirstSearch extends ASearchingAlgorithm {
+public abstract class DepthFirstSearch extends ASearchingAlgorithm {
 }

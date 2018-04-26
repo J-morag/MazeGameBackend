@@ -12,7 +12,7 @@ public class SearchableMaze implements ISearchable{
     private MazeState startState;
     private MazeState goalState;
     private double heuristicDistance;
-    private ArrayList<MazeState> allPossibleStates;
+    private ArrayList<AState> allPossibleStates;
     private MazeState[][] mazeStatesMap;
 
     /**
@@ -21,7 +21,7 @@ public class SearchableMaze implements ISearchable{
     public SearchableMaze(Maze maze) {
         this.maze = maze;
         this.heuristicDistance = 0.0;
-        this.allPossibleStates = new ArrayList<MazeState>();
+        this.allPossibleStates = new ArrayList<AState>();
         this.mazeStatesMap = new MazeState[maze.getMazeMap().length][(maze.getMazeMap()[0]).length];
         //initialize start and goal states
         Position startPosition = maze.getStartPosition();
@@ -34,16 +34,16 @@ public class SearchableMaze implements ISearchable{
      * Creates states for each passage in the maze, and update it's successors
      * @return a list of all possible maze states
      */
-    public ArrayList<MazeState> getAllPossibleStates(){
+    public ArrayList<AState> getAllPossibleStates(){
         int[][] mazeMap = maze.getMazeMap();
 
         //create MazeStates for all the passages in the maze
         for(int row=0; row < mazeMap.length; row++){
             for(int col=0; col < mazeMap[0].length; col++){
                 if(mazeMap[row][col] == 0) { //a passage
-                    MazeState mState = new MazeState(getHeuristicDistance(row, col), new Position(row, col));
+                    AState mState = new MazeState(getHeuristicDistance(row, col), new Position(row, col));
                     allPossibleStates.add(mState);
-                    mazeStatesMap[row][col] = mState;
+                    mazeStatesMap[row][col] = (MazeState)mState;
                 }
             }
         }
@@ -88,8 +88,8 @@ public class SearchableMaze implements ISearchable{
 
     //update successors for all the MazeStates
     private void updateSuccessors (int[][] mazeMap) {
-        for (MazeState mState : allPossibleStates) {
-            Position statePosition = mState.getPosition();
+        for (AState mState : allPossibleStates) {
+            Position statePosition = ((MazeState)mState).getPosition();
             int rowPosition = statePosition.getRowIndex();
             int colPosition = statePosition.getColomnIndex();
 
@@ -126,5 +126,11 @@ public class SearchableMaze implements ISearchable{
                     mState.getSuccessors().add(mazeStatesMap[rowPosition - 1][colPosition - 1]);
             }
         }
+    }
+
+    private boolean isValidPosition (int[][] mazeMap, Position cell){
+        if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColomnIndex() < 0 || cell.getColomnIndex() > mazeMap[0].length)
+            return false;
+        else return true;
     }
 }
