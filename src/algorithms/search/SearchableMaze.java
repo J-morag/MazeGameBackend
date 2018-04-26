@@ -94,42 +94,46 @@ public class SearchableMaze implements ISearchable{
             int colPosition = statePosition.getColomnIndex();
 
             //upper state
-            if (mazeMap[rowPosition - 1][colPosition] == 0)
+            if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0)
                 mState.getSuccessors().add(mazeStatesMap[rowPosition - 1][colPosition]);
             //upper right diagonal
-            if (mazeMap[rowPosition - 1][colPosition + 1] == 0) {
-                if (mazeMap[rowPosition - 1][colPosition] == 0 || mazeMap[rowPosition][colPosition + 1] == 0)
+            if (isValid(mazeMap,rowPosition - 1,colPosition+1)&& mazeMap[rowPosition - 1][colPosition + 1] == 0) {
+                if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0 ||
+                        isValid(mazeMap,rowPosition,colPosition+1)&& mazeMap[rowPosition][colPosition + 1] == 0)
                     mState.getSuccessors().add(mazeStatesMap[rowPosition - 1][colPosition + 1]);
             }
             //right cell
-            if (mazeMap[rowPosition][colPosition + 1] == 0)
+            if (isValid(mazeMap,rowPosition,colPosition+1)&&mazeMap[rowPosition][colPosition + 1] == 0)
                 mState.getSuccessors().add(mazeStatesMap[rowPosition][colPosition + 1]);
             //lower right diagonal
-            if (mazeMap[rowPosition + 1][colPosition + 1] == 0) {
-                if (mazeMap[rowPosition + 1][colPosition] == 0 || mazeMap[rowPosition][colPosition + 1] == 0)
+            if (isValid(mazeMap,rowPosition+1,colPosition+1) && mazeMap[rowPosition + 1][colPosition + 1] == 0) {
+                if (isValid(mazeMap,rowPosition+1,colPosition)&& mazeMap[rowPosition + 1][colPosition] == 0 ||
+                        isValid(mazeMap,rowPosition,colPosition+1)&& mazeMap[rowPosition][colPosition + 1] == 0)
                     mState.getSuccessors().add(mazeStatesMap[rowPosition + 1][colPosition + 1]);
             }
             //lower cell
-            if (mazeMap[rowPosition + 1][colPosition] == 0)
+            if (isValid(mazeMap,rowPosition+1,colPosition)&& mazeMap[rowPosition + 1][colPosition] == 0)
                 mState.getSuccessors().add(mazeStatesMap[rowPosition + 1][colPosition]);
             //lower left diagonal
-            if (mazeMap[rowPosition + 1][colPosition - 1] == 0) {
-                if (mazeMap[rowPosition + 1][colPosition] == 0 || mazeMap[rowPosition][colPosition - 1] == 0)
+            if (isValid(mazeMap,rowPosition+1,colPosition-1)&& mazeMap[rowPosition + 1][colPosition - 1] == 0) {
+                if (isValid(mazeMap,rowPosition+1,colPosition)&& mazeMap[rowPosition + 1][colPosition] == 0 ||
+                        isValid(mazeMap,rowPosition,colPosition-1)&& mazeMap[rowPosition][colPosition - 1] == 0)
                     mState.getSuccessors().add(mazeStatesMap[rowPosition + 1][colPosition - 1]);
             }
             //left cell
-            if (mazeMap[rowPosition][colPosition - 1] == 0)
+            if (isValid(mazeMap,rowPosition,colPosition-1)&& mazeMap[rowPosition][colPosition - 1] == 0)
                 mState.getSuccessors().add(mazeStatesMap[rowPosition][colPosition - 1]);
             //upper left diagonal
-            if (mazeMap[rowPosition - 1][colPosition - 1] == 0) {
-                if (mazeMap[rowPosition - 1][colPosition] == 0 || mazeMap[rowPosition][colPosition - 1] == 0)
+            if (isValid(mazeMap,rowPosition - 1,colPosition-1)&& mazeMap[rowPosition - 1][colPosition - 1] == 0) {
+                if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0 ||
+                        isValid(mazeMap,rowPosition,colPosition-1)&& mazeMap[rowPosition][colPosition - 1] == 0)
                     mState.getSuccessors().add(mazeStatesMap[rowPosition - 1][colPosition - 1]);
             }
         }
     }
 
-    private boolean isValidPosition (int[][] mazeMap, Position cell){
-        if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColomnIndex() < 0 || cell.getColomnIndex() > mazeMap[0].length)
+    private boolean isValid (int[][] mazeMap, int row, int column){
+        if (row < 0 || row >= mazeMap.length || column < 0 || column > mazeMap[0].length)
             return false;
         else return true;
     }
