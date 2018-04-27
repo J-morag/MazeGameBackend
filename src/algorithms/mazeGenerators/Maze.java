@@ -65,10 +65,10 @@ public class Maze
 			if (row.length != numColumns) throw new IllegalArgumentException("jagged map");
 		}
 		//check that start and end positions are within the map.
-		if (startPosition.getRowIndex() > numRows-1 || startPosition.getColomnIndex() > numColumns-1
-				|| startPosition.getRowIndex() < 0 || startPosition.getColomnIndex() < 0
-				|| endPosition.getRowIndex() > numRows-1 || endPosition.getColomnIndex() > numColumns-1
-				|| endPosition.getRowIndex() < 0 || endPosition.getColomnIndex() < 0)
+		if (startPosition.getRowIndex() > numRows-1 || startPosition.getColumnIndex() > numColumns-1
+				|| startPosition.getRowIndex() < 0 || startPosition.getColumnIndex() < 0
+				|| endPosition.getRowIndex() > numRows-1 || endPosition.getColumnIndex() > numColumns-1
+				|| endPosition.getRowIndex() < 0 || endPosition.getColumnIndex() < 0)
 			throw new IllegalArgumentException("position out of bounds");
 		//check that the start and end positions don't overlap
 		if (startPosition.equals(endPosition)) throw new IllegalArgumentException("overlapping start and end positions");
@@ -109,29 +109,31 @@ public class Maze
 	 */
 	
 	public void print() {
-		int sRow = startPosition.getRowIndex();
-		int sColumn = startPosition.getColomnIndex();
-		int eRow = goalPosition.getRowIndex();
-		int eColumn = goalPosition.getColomnIndex();
-		for (int j=0; j<mazeMap.length ; j++) System.out.print('_');
-		System.out.println("");
-		for (int i=0; i<mazeMap.length ; i++){
-			System.out.print("|");
-			for (int j=0; j<mazeMap.length ; j++){
-				if(i==sRow && j==sColumn) System.out.print('S');
-				else if(i==eRow && j==eColumn) System.out.print('E');
-				//else if(0 == mazeMap[i][j]) System.out.print('░');
-				else if(0 == mazeMap[i][j]) System.out.print("☐");
-				//else System.out.print('█');
-				else System.out.print('■');
-			}
-			System.out.println("|");
-		}
-		for (int j=0; j<mazeMap.length ; j++) System.out.print('_');
-		System.out.println("");
+		System.out.println(this.toString());
 	}
 
-
-
+	@Override
+	public String toString() {
+		String ans = "";
+		int sRow = startPosition.getRowIndex();
+		int sColumn = startPosition.getColumnIndex();
+		int eRow = goalPosition.getRowIndex();
+		int eColumn = goalPosition.getColumnIndex();
+		for (int j=0; j<mazeMap.length ; j++) System.out.print('_');
+		ans += '\n';
+		for (int i=0; i<mazeMap.length ; i++){
+			ans += '|';
+			for (int j=0; j<mazeMap.length ; j++){
+				if(i==sRow && j==sColumn) ans += 'S';
+				else if(i==eRow && j==eColumn) ans += 'E';
+				else if(0 == mazeMap[i][j]) ans += "☐";
+				else ans += '■';
+			}
+			ans += "|\n";
+		}
+		for (int j=0; j<mazeMap.length ; j++) ans += '_';
+		ans += '\n';
+		return ans;
+	}
 }
 

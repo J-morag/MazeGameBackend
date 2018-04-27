@@ -1,9 +1,6 @@
 package algorithms.mazeGenerators;
 
-import java.awt.*;
-import java.security.KeyPair;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -44,7 +41,7 @@ public class MyMazeGenerator extends AMazeGenerator
 		}
 		//choose a random cell in the maze and change it to a passage
 		Position rndCell = getRandomCellInArray(mazeMap);
-		mazeMap[rndCell.getRowIndex()][rndCell.getColomnIndex()] = 0;
+		mazeMap[rndCell.getRowIndex()][rndCell.getColumnIndex()] = 0;
 
 		//add frontiers of the random cell to the list
 		lFrontierCells.addAll(getFrontiers(mazeMap,rndCell));
@@ -60,7 +57,7 @@ public class MyMazeGenerator extends AMazeGenerator
                 if (!isValidPosition(mazeMap,rndNeighbor))
                     throw new IllegalArgumentException("The position is out of bounds of the maze");
 				mazeMap = connectFrontierToNeighbor(mazeMap,rndFrontier,rndNeighbor); //connect the frontier to the neighbor and set 0 between them
-				mazeMap[rndFrontier.getRowIndex()][rndFrontier.getColomnIndex()] = 0; //change the frontier wall to passage
+				mazeMap[rndFrontier.getRowIndex()][rndFrontier.getColumnIndex()] = 0; //change the frontier wall to passage
 				lFrontierCells.addAll(getFrontiers(mazeMap,rndFrontier)); //add the frontiers of the frontier cell to the list
 			}
 			lFrontierCells.remove(rndFrontier);
@@ -82,7 +79,7 @@ public class MyMazeGenerator extends AMazeGenerator
 	}
 
 	private boolean isValidPosition (int[][] mazeMap, Position cell){
-        if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColomnIndex() < 0 || cell.getColomnIndex() > mazeMap[0].length)
+        if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColumnIndex() < 0 || cell.getColumnIndex() > mazeMap[0].length)
             return false;
         else return true;
     }
@@ -94,7 +91,7 @@ public class MyMazeGenerator extends AMazeGenerator
 
         List<Position> frontiers = new ArrayList<>();
         int rowCell = cell.getRowIndex();
-        int colCell = cell.getColomnIndex();
+        int colCell = cell.getColumnIndex();
 
         //on the right
         if(colCell+2 < mazeMap[0].length && mazeMap[rowCell][colCell+2] == 1)
@@ -120,7 +117,7 @@ public class MyMazeGenerator extends AMazeGenerator
 
         List<Position> neighbors = new ArrayList<>();
         int rowCell = cell.getRowIndex();
-        int colCell = cell.getColomnIndex();
+        int colCell = cell.getColumnIndex();
 
         //on the right
         if(colCell+2 < mazeMap[0].length && mazeMap[rowCell][colCell+2] == 0)
@@ -140,13 +137,13 @@ public class MyMazeGenerator extends AMazeGenerator
 
 	private int[][] connectFrontierToNeighbor (int[][] mazeMap, Position frontier, Position neighbor){
 		int rowBetween, columnBetween;
-		if(frontier.getColomnIndex() == neighbor.getColomnIndex()){
+		if(frontier.getColumnIndex() == neighbor.getColumnIndex()){
 			rowBetween = Math.min(frontier.getRowIndex(), neighbor.getRowIndex()) + 1;
-			columnBetween = frontier.getColomnIndex();
+			columnBetween = frontier.getColumnIndex();
 		}
 		else if(frontier.getRowIndex() == neighbor.getRowIndex()){
 			rowBetween = frontier.getRowIndex();
-			columnBetween = Math.min(frontier.getColomnIndex(), neighbor.getColomnIndex()) + 1;
+			columnBetween = Math.min(frontier.getColumnIndex(), neighbor.getColumnIndex()) + 1;
 		}
 		else return null;
 

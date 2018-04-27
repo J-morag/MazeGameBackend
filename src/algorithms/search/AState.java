@@ -20,10 +20,10 @@ public abstract class AState implements Comparable{
 
     /**
      *
-     * @return a new ArrayList<AState> of successors (states you can get to from this state).
+     * @return ArrayList<AState> of successors (states you can get to from this state).
      */
     public ArrayList<AState> getSuccessors(){
-        return new ArrayList<>(successors);
+        return successors;
     }
 
     /**

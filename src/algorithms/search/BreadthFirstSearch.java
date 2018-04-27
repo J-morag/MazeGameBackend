@@ -4,11 +4,12 @@ import java.util.*;
 
 public class BreadthFirstSearch extends ASearchingAlgorithm {
 
+    boolean debug = false;
     Queue<AState> greyVerticesQueue;
 
     public BreadthFirstSearch() {
         super();
-        Queue<AState> greyVertices = new LinkedList<AState>();
+        greyVerticesQueue = new LinkedList<AState>();
     }
 
     @Override
@@ -18,6 +19,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
 
     @Override
     public Solution solve(ISearchable searchProblem) {
+        numberOfNodesEvaluated = 0;
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
@@ -55,10 +57,11 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
         //progress
         while(!greyVerticesQueue.isEmpty()){
             AState u = greyVerticesQueue.poll();
-            numberOfNodesEvaluated++; // TODO should this be incremented here, or when a vertex is discovered?
+            if(debug) System.out.println(u.toString());
             for (AState v:
                     u.getSuccessors()) {
                 if(whiteVertices.contains(v)){
+                    numberOfNodesEvaluated++; // TODO count nodes visited, or discovered? currently counting discovered
                     pi.put(v, u);
                     if(v.equals(goalState)) return v;
                     whiteVertices.remove(v);

@@ -50,7 +50,7 @@ public class Position
 	 * returns the column index.
 	 */
 	
-	public int getColomnIndex() {
+	public int getColumnIndex() {
 		return column;
 	}
 

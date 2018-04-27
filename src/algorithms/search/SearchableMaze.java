@@ -3,15 +3,14 @@ package algorithms.search;
 import algorithms.mazeGenerators.*;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 
 public class SearchableMaze implements ISearchable{
 
+    private boolean debug = false;
     private Maze maze;
     private MazeState startState;
     private MazeState goalState;
-    private double heuristicDistance;
+    //private double heuristicDistance;
     private ArrayList<AState> allPossibleStates;
     private MazeState[][] mazeStatesMap;
 
@@ -20,14 +19,19 @@ public class SearchableMaze implements ISearchable{
      */
     public SearchableMaze(Maze maze) {
         this.maze = maze;
-        this.heuristicDistance = 0.0;
+        //this.heuristicDistance = 0.0;
         this.allPossibleStates = new ArrayList<AState>();
         this.mazeStatesMap = new MazeState[maze.getMazeMap().length][(maze.getMazeMap()[0]).length];
         //initialize start and goal states
         Position startPosition = maze.getStartPosition();
-        double distanceToGoal = getHeuristicDistance(startPosition.getRowIndex(),startPosition.getColomnIndex());
+        double distanceToGoal = getHeuristicDistance(startPosition.getRowIndex(),startPosition.getColumnIndex());
         this.startState = new MazeState(distanceToGoal,startPosition);
         this.goalState = new MazeState(0.0,maze.getGoalPosition());
+        //put start and goal states on the map, and in the list
+        mazeStatesMap[startPosition.getRowIndex()][startPosition.getColumnIndex()] = this.startState;
+        mazeStatesMap[maze.getGoalPosition().getRowIndex()][maze.getGoalPosition().getColumnIndex()] = this.goalState;
+        allPossibleStates.add(this.startState);
+        allPossibleStates.add(this.goalState);
     }
 
     /**
@@ -40,7 +44,7 @@ public class SearchableMaze implements ISearchable{
         //create MazeStates for all the passages in the maze
         for(int row=0; row < mazeMap.length; row++){
             for(int col=0; col < mazeMap[0].length; col++){
-                if(mazeMap[row][col] == 0) { //a passage
+                if(mazeMap[row][col] == 0 && null == mazeStatesMap[row][col]) { //a passage and not the start or goal states
                     AState mState = new MazeState(getHeuristicDistance(row, col), new Position(row, col));
                     allPossibleStates.add(mState);
                     mazeStatesMap[row][col] = (MazeState)mState;
@@ -50,6 +54,7 @@ public class SearchableMaze implements ISearchable{
 
         //update successors for all the MazeStates
         updateSuccessors(mazeMap);
+        if(debug) System.out.println("finished creating states");
         return allPossibleStates;
     }
 
@@ -80,10 +85,9 @@ public class SearchableMaze implements ISearchable{
         Position goalPosition = maze.getGoalPosition();
 
         int deltaRow = goalPosition.getRowIndex() - rowPosition;
-        int deltaCol = goalPosition.getColomnIndex() - colPosition;
+        int deltaCol = goalPosition.getColumnIndex() - colPosition;
 
-        heuristicDistance = Math.sqrt(Math.pow(deltaRow,2) + Math.pow(deltaCol,2));
-        return heuristicDistance;
+        return Math.sqrt(Math.pow(deltaRow,2) + Math.pow(deltaCol,2));
     }
 
     //update successors for all the MazeStates
@@ -91,7 +95,7 @@ public class SearchableMaze implements ISearchable{
         for (AState mState : allPossibleStates) {
             Position statePosition = ((MazeState)mState).getPosition();
             int rowPosition = statePosition.getRowIndex();
-            int colPosition = statePosition.getColomnIndex();
+            int colPosition = statePosition.getColumnIndex();
 
             //upper state
             if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0)
@@ -133,8 +137,13 @@ public class SearchableMaze implements ISearchable{
     }
 
     private boolean isValid (int[][] mazeMap, int row, int column){
-        if (row < 0 || row >= mazeMap.length || column < 0 || column > mazeMap[0].length)
+        if (row < 0 || row >= mazeMap.length || column < 0 || column >= mazeMap[0].length)
             return false;
         else return true;
+    }
+
+    @Override
+    public String toString() {
+        return maze.toString();
     }
 }

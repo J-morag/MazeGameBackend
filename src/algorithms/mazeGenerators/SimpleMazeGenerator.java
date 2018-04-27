@@ -72,9 +72,9 @@ public class SimpleMazeGenerator extends AMazeGenerator
 
 	private void makeAPath(int[][] mazeMap, Position startPos, Position endPos){
 		int i = startPos.getRowIndex();
-		int j = startPos.getColomnIndex();
+		int j = startPos.getColumnIndex();
 		int endRow = endPos.getRowIndex();
-		int endColumn = endPos.getColomnIndex();
+		int endColumn = endPos.getColumnIndex();
 		while(!(i == endRow && j == endColumn)){
 			int dirDelta = rand.nextInt(5); //up to 4 steps
 			int dir = rand.nextInt(2); //i or j
