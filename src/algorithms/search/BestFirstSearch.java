@@ -5,6 +5,11 @@ import java.util.PriorityQueue;
 
 public class BestFirstSearch extends BreadthFirstSearch  {
 
+    @Override
+    public String getName() {
+        return "BreadthFirstSearch";
+    }
+
     /**
      * // replaces the queue with a priority queue. giving lower heuristic distance a higher priority.
      */

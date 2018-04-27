@@ -13,7 +13,7 @@ public class RunSearchOnMaze {
         Maze maze = mg.generate(1000, 1000);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
         solveProblem(searchableMaze, new BreadthFirstSearch());
-        //solveProblem(searchableMaze, new DepthFirstSearch());
+        solveProblem(searchableMaze, new DepthFirstSearch());
         solveProblem(searchableMaze, new BestFirstSearch());
     }
 
@@ -24,10 +24,12 @@ public class RunSearchOnMaze {
         Solution solution = searcher.solve(domain);
         System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", searcher.getName(), searcher.getNumberOfNodesEvaluated()));
         //print maze
-        //System.out.println(domain.toString());
+//        System.out.println(domain.toString());
 
 
         //Printing Solution Path
+//        System.out.println(solution);
+
 //                System.out.println("Solution path:");
 //        ArrayList<AState> solutionPath = solution.getSolutionPath();
 //        for (int i = 0; i < solutionPath.size(); i++) {

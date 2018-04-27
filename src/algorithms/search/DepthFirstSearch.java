@@ -1,4 +1,83 @@
 package algorithms.search;
 
-public abstract class DepthFirstSearch extends ASearchingAlgorithm {
+import java.util.HashMap;
+import java.util.Set;
+import java.util.Stack;
+
+public class DepthFirstSearch extends ASearchingAlgorithm {
+
+    Stack<AState> neighborsStack;
+
+    public DepthFirstSearch() {
+        super();
+        neighborsStack = new Stack<>();
+    }
+
+    @Override
+    public String getName() {
+        return "DepthFirstSearch";
+    }
+
+    /**
+     * run DFS search on graph.
+     * @param startState
+     * @param goalState
+     * @param whiteVertices - all vertices before start of search.
+     * @param pi - records which vertex was discovered by which.
+     * @return - the goal position if found. Else, null.
+     */
+    @Override
+    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi){
+        //DFS initialization
+        whiteVertices.remove(startState);
+        pi.put(startState, null);
+        numberOfNodesEvaluated++;
+        //progress
+        AState u = startState;
+        int counter = 0;
+        while (!u.equals(goalState)){
+            counter++;
+            for (AState v:
+                    u.getSuccessors()) { //TODO should reverse order of neighbors before inserting
+                if(whiteVertices.contains(v)){
+                    neighborsStack.push(v);
+                }
+            }
+            AState v = neighborsStack.pop();
+            if(whiteVertices.contains(v)){
+                numberOfNodesEvaluated++;
+                whiteVertices.remove(v);
+                pi.put(v, u);
+                u = v;
+            }
+            //if (counter % 100000 == 0) System.gc();
+        }
+        return u;
+
+    }
+
+    /**
+     * recursive function for visiting a vertex in DFS.
+     * @param u - current vertex
+     * @param goalState - the goal state.
+     * @param whiteVertices - set of all white (undiscovered vertices).
+     * @param pi - maps parents.
+     * @return the goal state if found, Else null.
+     */
+    private AState DFSVisit(AState u, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi){
+        for (AState v:
+                u.getSuccessors()) {
+            if(whiteVertices.contains(v)){
+                numberOfNodesEvaluated++;
+                whiteVertices.remove(v);
+                pi.put(u, v);
+                if(v.equals(goalState)) return v;
+                else {
+                    AState searchBranchResult = DFSVisit(v, goalState, whiteVertices, pi);
+                    if (null != searchBranchResult) return searchBranchResult;
+                }
+            }
+        }
+        return null;
+    }
 }
