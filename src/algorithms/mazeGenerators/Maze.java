@@ -119,19 +119,20 @@ public class Maze
 		int sColumn = startPosition.getColumnIndex();
 		int eRow = goalPosition.getRowIndex();
 		int eColumn = goalPosition.getColumnIndex();
-		for (int j=0; j<mazeMap.length ; j++) System.out.print('_');
+		for (int j=0; j<mazeMap.length+2 ; j++) System.out.print("✲ ");
 		ans += '\n';
 		for (int i=0; i<mazeMap.length ; i++){
-			ans += '|';
+			ans += "✲ ";
 			for (int j=0; j<mazeMap.length ; j++){
-				if(i==sRow && j==sColumn) ans += 'S';
-				else if(i==eRow && j==eColumn) ans += 'E';
+				if(i==sRow && j==sColumn) ans += "S";
+				else if(i==eRow && j==eColumn) ans += "E";
 				else if(0 == mazeMap[i][j]) ans += "☐";
 				else ans += '■';
+				ans += ' ';
 			}
-			ans += "|\n";
+			ans += "✲\n";
 		}
-		for (int j=0; j<mazeMap.length ; j++) ans += '_';
+		for (int j=0; j<mazeMap.length+2 ; j++) ans += "✲ ";
 		ans += '\n';
 		return ans;
 	}
