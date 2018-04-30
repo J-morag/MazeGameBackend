@@ -23,6 +23,8 @@ public class SimpleMazeGenerator extends AMazeGenerator
 	 * @param numOfRows - the required number of rows in the maze.
 	 * @param numOfColumns - the required number of columns in the maze.
 	 * @return - a randomly generated maze.
+	 * @throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
+	 * @throws IllegalArgumentException - if either the start or end positions are outside the map, or  they overlap.
 	 */
 	@Override
 	public Maze generate(int numOfRows, int numOfColumns) {
@@ -32,7 +34,7 @@ public class SimpleMazeGenerator extends AMazeGenerator
 
 		makeAPath(mazeMap, startPos, endPos);
 
-		return new Maze(mazeMap, startPos, endPos);
+		return new Maze(mazeMap, startPos, endPos); //might throw
 	}
 
 	private int[][] getMapWithRandomWalls(int numOfRows, int numOfColumns, double desiredWallDensity){

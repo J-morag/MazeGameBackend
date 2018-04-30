@@ -23,9 +23,7 @@ public abstract class AMazeGenerator implements IMazeGenerator
 	 * @param numOfColumns - the required number of columns in the maze.
 	 * @return - default return - null.
 	 */
-	public Maze generate(int numOfRows, int numOfColumns) {
-		return null;
-	}
+	public abstract Maze generate(int numOfRows, int numOfColumns);
 
 	/**
 	 * Measures the operating time of the 'generate' method.

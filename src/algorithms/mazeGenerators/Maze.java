@@ -49,17 +49,20 @@ public class Maze
 	 * @param mazeMap - 2D int array that represents the body of the map. must not be jagged.
 	 * @param startPosition - start position. must fall withing the boundary of the maze. deep copied.
 	 * @param endPosition - end position. must fall withing the boundary of the maze. deep copied.
-	 * @throws IllegalArgumentException - if the given array is jagged, empty, or null.
+	 * @throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
 	 * @throws IllegalArgumentException - if either the start or end positions are outside the map, or null, or  they overlap.
 	 */
 
 	public Maze(int[][] mazeMap, Position startPosition, Position endPosition) {
+		final int minVectorLength = 5;
 		//check nulls
 		if (null==mazeMap || null==startPosition || null==endPosition) throw new IllegalArgumentException("null argument.");
 		//check map validity
 		int numRows = mazeMap.length;
+		if (numRows < minVectorLength) throw new IllegalArgumentException("Number of rows must be larger than " + minVectorLength);
 		if (0==numRows) throw new IllegalArgumentException("empty map");
 		int numColumns = mazeMap[0].length;
+		if (numColumns< minVectorLength) throw new IllegalArgumentException("Number of columns must be larger than " + minVectorLength);
 		if (0==numColumns) throw new IllegalArgumentException("empty map");
 		for (int[] row : mazeMap) {
 			if (row.length != numColumns) throw new IllegalArgumentException("jagged map");

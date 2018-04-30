@@ -7,7 +7,7 @@ public class BestFirstSearch extends BreadthFirstSearch  {
 
     @Override
     public String getName() {
-        return "BreadthFirstSearch";
+        return "BestFirstSearch";
     }
 
     /**

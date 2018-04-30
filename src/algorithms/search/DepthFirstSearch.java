@@ -34,9 +34,7 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
         numberOfNodesEvaluated++;
         //progress
         AState u = startState;
-        int counter = 0;
         while (!u.equals(goalState)){
-            counter++;
             for (AState v:
                     u.getSuccessors()) { //TODO should reverse order of neighbors before inserting
                 if(whiteVertices.contains(v)){
@@ -50,7 +48,6 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
                 pi.put(v, u);
                 u = v;
             }
-            //if (counter % 100000 == 0) System.gc();
         }
         return u;
 

@@ -4,7 +4,6 @@ import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
 import algorithms.search.*;
-import java.util.ArrayList;
 
 
 public class RunSearchOnMaze {
