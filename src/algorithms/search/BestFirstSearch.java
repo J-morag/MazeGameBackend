@@ -13,9 +13,9 @@ public class BestFirstSearch extends BreadthFirstSearch  {
     }
 
     @Override
-    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance) {
+    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance) {
         //BFS initialization
-        whiteVertices.remove(startState);
+        visitedVertices.add(startState);
         greyVerticesQueue.add(startState);
         pi.put(startState, null);
         //progress
@@ -24,12 +24,12 @@ public class BestFirstSearch extends BreadthFirstSearch  {
             if(debug) System.out.println(u.toString());
             for (AState v:
                     u.getSuccessors()) {
-                if(whiteVertices.contains(v)){
+                if(!visitedVertices.contains(v)){
                     numberOfNodesEvaluated++;
                     pi.put(v, u);
                     distance.put(v, distance.get(u) + 1);
                     if(v.equals(goalState)) return v;
-                    whiteVertices.remove(v);
+                    visitedVertices.add(v);
                     greyVerticesQueue.add(v);
                 }
                 else if (distance.get(u) + 1 < distance.get(v)){
