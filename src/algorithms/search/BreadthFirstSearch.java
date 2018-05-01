@@ -26,7 +26,7 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      * @return - the goal position if found. Else, null.
      */
     @Override
-    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi){
+    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance){
         //BFS initialization
         whiteVertices.remove(startState);
         greyVerticesQueue.add(startState);

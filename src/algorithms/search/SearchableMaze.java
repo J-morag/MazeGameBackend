@@ -74,8 +74,24 @@ public class SearchableMaze implements ISearchable{
         return goalState;
     }
 
+//    /**
+//     * Calculates the euclidean distance from a given state to the goal state
+//     * @param rowPosition - row coordinate of the position of the given state
+//     * @param colPosition - column coordinate of the position of the given state
+//     * @return the heuristic distance from start state to goal state
+//     */
+//    private double getHeuristicDistance(int rowPosition, int colPosition){
+//
+//        Position goalPosition = maze.getGoalPosition();
+//
+//        int deltaRow = goalPosition.getRowIndex() - rowPosition;
+//        int deltaCol = goalPosition.getColumnIndex() - colPosition;
+//
+//        return Math.sqrt(Math.pow(deltaRow,2) + Math.pow(deltaCol,2));
+//    }
+
     /**
-     * Calculates the euclidean distance from a given state to the goal state
+     * Prefer diagonals
      * @param rowPosition - row coordinate of the position of the given state
      * @param colPosition - column coordinate of the position of the given state
      * @return the heuristic distance from start state to goal state
@@ -146,4 +162,13 @@ public class SearchableMaze implements ISearchable{
     public String toString() {
         return maze.toString();
     }
+
+//    public ArrayList<AState> getSuccessors(AState parent)
+//    {
+//        ArrayList<AState> sons = parent.getSuccessors();
+//        for (AState son:
+//             sons) {
+//            if
+//        }
+//    }
 }

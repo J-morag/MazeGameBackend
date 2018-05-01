@@ -28,9 +28,11 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
                                                                 //(max number of entries divided by load factor) +1
         whiteVertices.addAll(vertices);
         HashMap<AState, AState> pi = new HashMap<AState, AState>((int)(vertices.size()/0.75) +1 );
+        HashMap<AState, Integer> distance = new HashMap<AState, Integer>((int)(vertices.size()/0.75) +1 );
+        distance.put(startState, 0);
 
         //fill solution
-        if(null != runAlgorithm(startState, goalState, whiteVertices, pi)){
+        if(null != runAlgorithm(startState, goalState, whiteVertices, pi, distance)){
             AState stepInSolution = goalState;
             while(null != stepInSolution){
                 solution.add(0, stepInSolution);
@@ -41,6 +43,6 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         else return null;
     }
 
-    protected abstract AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi);
+    protected abstract AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance);
 
 }

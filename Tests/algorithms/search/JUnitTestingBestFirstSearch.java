@@ -19,16 +19,4 @@ class JUnitTestingBestFirstSearch {
         assertEquals("BestFirstSearch", bfs.getName());
     }
 
-    @Test
-    void runAlgorithm() {
-
-    }
-
-    @Test
-    void getNumberOfNodesEvaluated() {
-    }
-
-    @Test
-    void solve() {
-    }
 }

@@ -1,6 +1,7 @@
 package algorithms.search;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -27,7 +28,8 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      * @return - the goal position if found. Else, null.
      */
     @Override
-    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi){
+    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance){
+        neighborsStack.setSize(whiteVertices.size());
         //DFS initialization
         whiteVertices.remove(startState);
         pi.put(startState, null);
@@ -35,8 +37,9 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
         //progress
         AState u = startState;
         while (!u.equals(goalState)){
-            for (AState v:
-                    u.getSuccessors()) { //TODO should reverse order of neighbors before inserting
+            List<AState> neighbors = u.getSuccessors();
+            for (int i = neighbors.size()-1; i >= 0 ; i--) {
+                AState v = neighbors.get(i);
                 if(whiteVertices.contains(v)){
                     neighborsStack.push(v);
                 }
