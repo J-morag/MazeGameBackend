@@ -9,15 +9,15 @@ public class MazeState extends AState{
 
     private Position position;
 
-    public MazeState(double heuristicDistance, Position position) {
-        super(heuristicDistance);
+    public MazeState(double cost, Position position) {
+        super(cost);
         this.position = new Position(position);
     }
 
-    public MazeState(double heuristicDistance, ArrayList<AState> successors, Position position) {
-        super(heuristicDistance, successors);
-        this.position = new Position(position);
-    }
+//    public MazeState(double heuristicDistance, ArrayList<AState> successors, Position position) {
+//        super(heuristicDistance, successors);
+//        this.position = new Position(position);
+//    }
 
     @Override
     public boolean equals(Object otherState) {
