@@ -7,6 +7,11 @@ import java.util.Set;
 
 public class BestFirstSearch extends BreadthFirstSearch  {
 
+    public BestFirstSearch() {
+        super();
+        this.greyVerticesQueue = new PriorityQueue<>();
+    }
+
     @Override
     public String getName() {
         return "BestFirstSearch";

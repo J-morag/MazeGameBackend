@@ -46,5 +46,7 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
             }
         }
         return null;
+
     }
+
 }
