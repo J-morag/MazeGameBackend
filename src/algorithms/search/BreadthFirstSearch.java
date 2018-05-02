@@ -22,7 +22,6 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      * @param startState
      * @param goalState
      * @param visitedVertices - all vertices that were visited already.
-     * @param pi - records which vertex was discovered by which.
      * @return - the goal position if found. Else, null.
      */
     @Override
