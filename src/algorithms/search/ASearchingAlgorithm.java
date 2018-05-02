@@ -23,13 +23,14 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
-        Set<AState> visitedVertices = new HashSet<>();
-        HashMap<AState, AState> pi = new HashMap<AState, AState>();
-        HashMap<AState, Integer> distance = new HashMap<AState, Integer>();
+//      List<AState> vertices = searchProblem.getAllPossibleStates();
+        Set<AState> visitedVertices = new HashSet<>((int)(vertices.size()/0.75) +1);
+//        HashMap<AState, AState> pi = new HashMap<AState, AState>((int)(vertices.size()/0.75) +1 );
+        HashMap<AState, Integer> distance = new HashMap<AState, Integer>((int)(vertices.size()/0.75) +1 );
         distance.put(startState, 0);
 
         //fill solution
-        if(null != runAlgorithm(startState, goalState, visitedVertices, pi, distance)){
+        if(null != runAlgorithm(searchProblem, startState, goalState, visitedVertices, distance)){
             AState stepInSolution = goalState;
             while(null != stepInSolution){
                 solution.add(0, stepInSolution);
@@ -40,6 +41,5 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         else return null;
     }
 
-    protected abstract AState runAlgorithm(AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance);
-
+    protected abstract AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, Integer> distance);
 }
