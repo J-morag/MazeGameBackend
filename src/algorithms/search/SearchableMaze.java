@@ -24,9 +24,9 @@ public class SearchableMaze implements ISearchable{
         //this.mazeStatesMap = new MazeState[maze.getMazeMap().length][(maze.getMazeMap()[0]).length];
 
         //initialize start and goal states
-        Position startPosition = maze.getStartPosition();
+        //Position startPosition = maze.getStartPosition();
         //double distanceToGoal = getHeuristicDistance(startPosition.getRowIndex(),startPosition.getColumnIndex());
-        this.startState = new MazeState(0.0,startPosition);
+        this.startState = new MazeState(0.0,maze.getStartPosition());
         this.goalState = new MazeState(0.0,maze.getGoalPosition());
 
         //put start and goal states on the map, and in the list
@@ -62,8 +62,9 @@ public class SearchableMaze implements ISearchable{
         int colPosition = statePosition.getColumnIndex();
 
         //upper state
-        if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0)
-            allPossibleStates.add(new MazeState(mState.getParent().getCost()+1, new Position(rowPosition-1,colPosition)));
+        if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0) {
+                allPossibleStates.add(new MazeState(mState.getCost() + 1, new Position(rowPosition - 1, colPosition)));
+        }
         //upper right diagonal
         if (isValid(mazeMap,rowPosition - 1,colPosition+1)&& mazeMap[rowPosition - 1][colPosition + 1] == 0) {
             if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0 ||

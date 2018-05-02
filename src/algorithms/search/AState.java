@@ -36,7 +36,11 @@ public abstract class AState implements Comparable{
         return parent;
     }
 
-//    /**
+    public void setParent(AState parent) {
+        this.parent = parent;
+    }
+
+    //    /**
 //     *
 //     * @param successors - a list of successors to this state. Will save a copy.
 //     */
