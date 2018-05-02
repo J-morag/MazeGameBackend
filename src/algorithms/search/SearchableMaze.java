@@ -10,14 +10,12 @@ public class SearchableMaze implements ISearchable{
     private Maze maze;
     private MazeState startState;
     private MazeState goalState;
-    private ArrayList<AState> allPossibleStates;
 
     /**
      * Constructor
      */
     public SearchableMaze(Maze maze) {
         this.maze = maze;
-        this.allPossibleStates = new ArrayList<AState>();
 
         //initialize start and goal states
         this.startState = new MazeState(0.0 ,maze.getStartPosition());
@@ -29,6 +27,7 @@ public class SearchableMaze implements ISearchable{
      * @return a list of all possible maze states
      */
     public ArrayList<AState> getAllPossibleStates(AState mState){
+        ArrayList<AState> allPossibleStates = new ArrayList<AState>();
         int[][] mazeMap = maze.getMazeMap();
         Position statePosition = ((MazeState)mState).getPosition();
         int rowPosition = statePosition.getRowIndex();
