@@ -23,7 +23,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
-        Set<AState> visitedVertices = new HashSet<>((int)(vertices.size()/0.75) +1);
+        Set<AState> visitedVertices = new HashSet<>();
 
         //fill solution
         if(null != runAlgorithm(searchProblem, startState, goalState, visitedVertices)){
