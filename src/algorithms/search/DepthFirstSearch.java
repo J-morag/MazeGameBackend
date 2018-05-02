@@ -27,7 +27,6 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
     protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> visitedVertices){
         AState u;
         neighborsStack.push(startState);
-        numberOfNodesEvaluated++;
         while (!neighborsStack.isEmpty()){
             u = neighborsStack.pop(); //O(1)
             if(!visitedVertices.contains(u)){ //O(1)

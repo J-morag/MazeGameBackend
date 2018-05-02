@@ -1,9 +1,6 @@
 package algorithms.search;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
 
@@ -23,7 +20,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
-        Set<AState> visitedVertices = new HashSet<>();
+        Set<AState> visitedVertices = new HashSet<>((int)(600000/0.75 +1));
 
         //fill solution
         AState lastStep = runAlgorithm(searchProblem, startState, goalState, visitedVertices);

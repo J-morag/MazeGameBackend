@@ -98,13 +98,7 @@ public class Maze
 	}
 
 	public int[][] getMazeMap() {
-		int[][] copyMazeMap = new int[mazeMap.length][mazeMap[0].length];
-		for(int i=0; i < mazeMap.length; i++){
-			for(int j=0; j < mazeMap[0].length; j++){
-				copyMazeMap[i][j] = mazeMap[i][j];
-			}
-		}
-		return copyMazeMap;
+		return mazeMap;
 	}
 
 	/**

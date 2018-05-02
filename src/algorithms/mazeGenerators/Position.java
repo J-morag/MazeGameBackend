@@ -1,5 +1,7 @@
 package algorithms.mazeGenerators;
 
+import java.util.Objects;
+
 /**
  * Position describes a position in a maze.
  * Is immutable.
@@ -75,5 +77,12 @@ public class Position
 		else return false;
 	}
 
+	@Override
+	public int hashCode() {
+		int hash = 7;
+		hash = hash*31 + row;
+		hash = hash*31 + column;
+		return hash;
+	}
 }
 
