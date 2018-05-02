@@ -1,17 +1,14 @@
 package algorithms.search;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class DepthFirstSearch extends ASearchingAlgorithm {
 
-    Stack<AState> neighborsStack;
+    Deque<AState> neighborsStack;
 
     public DepthFirstSearch() {
         super();
-        neighborsStack = new Stack<>();
+        neighborsStack = new LinkedList<>();
     }
 
     @Override
@@ -29,29 +26,27 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      */
     @Override
     protected AState runAlgorithm(AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance){
-        //DFS initialization
-        visitedVertices.add(startState);
-        pi.put(startState, null);
-        numberOfNodesEvaluated++;
-        //progress
-        AState u = startState;
-        while (!u.equals(goalState)){
-            List<AState> neighbors = u.getSuccessors();
-            for (int i = neighbors.size()-1; i >= 0 ; i--) {
-                AState v = neighbors.get(i);
-                if(!visitedVertices.contains(v)){
-                    neighborsStack.push(v);
+        AState u;
+        neighborsStack.push(startState);
+        pi.put(startState,null);
+        while (!neighborsStack.isEmpty()){
+            u = neighborsStack.pop(); //O(1)
+            if(!visitedVertices.contains(u)){ //O(1)
+//                System.out.println(u);  //debug
+                numberOfNodesEvaluated++;
+                if (u.equals(goalState)) return u;
+                visitedVertices.add(u); //O(1)
+                List<AState> neighbors = u.getSuccessors();
+                for (int i = neighbors.size()-1; i >= 0 ; i--) {
+                    AState v = neighbors.get(i); //O(1)
+                    if(!visitedVertices.contains(v)){ //O(1)
+                        neighborsStack.push(v); //O(1)
+                        pi.put(v, u); //O(1)
+                    }
                 }
             }
-            AState v = neighborsStack.pop();
-            if(!visitedVertices.contains(v)){
-                numberOfNodesEvaluated++;
-                visitedVertices.add(v);
-                pi.put(v, u);
-                u = v;
-            }
         }
-        return u;
+        return null;
 
     }
 

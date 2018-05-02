@@ -28,7 +28,7 @@ public class RunSearchOnMaze {
         //printIndepth( domain,  solution);
 
         time = System.currentTimeMillis()-time;
-        System.out.println("Total time(sec): " + time/1000);
+        System.out.println("Total time(milliseconds): " + time);
 
 //                System.out.println("Solution path:");
 //        ArrayList<AState> solutionPath = solution.getSolutionPath();
