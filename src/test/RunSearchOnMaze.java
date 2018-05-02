@@ -19,15 +19,16 @@ public class RunSearchOnMaze {
 
     private static void solveProblem(ISearchable domain, ISearchingAlgorithm
             searcher) {
+
+        long time = System.currentTimeMillis();
         //Solve a searching problem with a searcher
         Solution solution = searcher.solve(domain);
         System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", searcher.getName(), searcher.getNumberOfNodesEvaluated()));
-        //print maze
-//        System.out.println(domain.toString());
 
+        //printIndepth( domain,  solution);
 
-        //Printing Solution Path
-//        System.out.println(solution);
+        time = System.currentTimeMillis()-time;
+        System.out.println("Total time(milliseconds): " + time);
 
 //                System.out.println("Solution path:");
 //        ArrayList<AState> solutionPath = solution.getSolutionPath();
@@ -41,5 +42,15 @@ public class RunSearchOnMaze {
 //        for (int i = 0; i < solutionPath.size(); i++) {
 //            System.out.println(String.format("%s. %s",i,solutionPath.get(i)));
 //        }
+
+    }
+    
+    private static void printIndepth(ISearchable domain, Solution solution){
+        //print maze
+        System.out.println(domain.toString());
+
+
+        //Printing Solution Path
+        System.out.println(solution);
     }
 }

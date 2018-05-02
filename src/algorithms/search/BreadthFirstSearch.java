@@ -21,14 +21,15 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      * run bfs search on graph.
      * @param startState
      * @param goalState
-     * @param whiteVertices - all vertices before start of search.
+     * @param visitedVertices - all vertices that were visited already.
      * @param pi - records which vertex was discovered by which.
      * @return - the goal position if found. Else, null.
      */
     @Override
     protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> whiteVertices){
+    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance){
         //BFS initialization
-        whiteVertices.remove(startState);
+        visitedVertices.add(startState);
         greyVerticesQueue.add(startState);
         //pi.put(startState, null);
         //progress
@@ -37,12 +38,12 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
             if(debug) System.out.println(u.toString());
             for (AState v:
                     searchProblem.getAllPossibleStates(u)) {
-                if(whiteVertices.contains(v)){
+                if(!visitedVertices.contains(v)){
                     numberOfNodesEvaluated++;
                     //pi.put(v, u);
                     v.parent = u;
                     if(v.equals(goalState)) return v;
-                    whiteVertices.remove(v);
+                    visitedVertices.add(v);
                     greyVerticesQueue.add(v);
                 }
             }

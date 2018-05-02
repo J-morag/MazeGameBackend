@@ -1,16 +1,14 @@
 package algorithms.search;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
 
 public class DepthFirstSearch extends ASearchingAlgorithm {
 
-    Stack<AState> neighborsStack;
+    Deque<AState> neighborsStack;
 
     public DepthFirstSearch() {
         super();
-        neighborsStack = new Stack<>();
+        neighborsStack = new LinkedList<>();
     }
 
     @Override
@@ -22,34 +20,33 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      * run DFS search on graph.
      * @param startState
      * @param goalState
-     * @param whiteVertices - all vertices before start of search.
+     * @param visitedVertices - all vertices before start of search.
      * @param pi - records which vertex was discovered by which.
      * @return - the goal position if found. Else, null.
      */
     @Override
-    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi){
-        //DFS initialization
-        whiteVertices.remove(startState);
-        pi.put(startState, null);
-        numberOfNodesEvaluated++;
-        //progress
-        AState u = startState;
-        while (!u.equals(goalState)){
-            for (AState v:
-                    u.getSuccessors()) { //TODO should reverse order of neighbors before inserting
-                if(whiteVertices.contains(v)){
-                    neighborsStack.push(v);
+    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance){
+        AState u;
+        neighborsStack.push(startState);
+        pi.put(startState,null);
+        while (!neighborsStack.isEmpty()){
+            u = neighborsStack.pop(); //O(1)
+            if(!visitedVertices.contains(u)){ //O(1)
+//                System.out.println(u);  //debug
+                numberOfNodesEvaluated++;
+                if (u.equals(goalState)) return u;
+                visitedVertices.add(u); //O(1)
+                List<AState> neighbors = u.getSuccessors();
+                for (int i = neighbors.size()-1; i >= 0 ; i--) {
+                    AState v = neighbors.get(i); //O(1)
+                    if(!visitedVertices.contains(v)){ //O(1)
+                        neighborsStack.push(v); //O(1)
+                        pi.put(v, u); //O(1)
+                    }
                 }
             }
-            AState v = neighborsStack.pop();
-            if(whiteVertices.contains(v)){
-                numberOfNodesEvaluated++;
-                whiteVertices.remove(v);
-                pi.put(v, u);
-                u = v;
-            }
         }
-        return u;
+        return null;
 
     }
 
