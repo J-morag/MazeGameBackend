@@ -39,7 +39,8 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
                 if(!visitedVertices.contains(v)){
                     numberOfNodesEvaluated++;
                     v.parent = u;
-                    if(v.equals(goalState)) return v;
+                    if(v.equals(goalState))
+                        return v;
                     visitedVertices.add(v);
                     greyVerticesQueue.add(v);
                 }

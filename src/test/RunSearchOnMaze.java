@@ -9,10 +9,10 @@ import algorithms.search.*;
 public class RunSearchOnMaze {
     public static void main(String[] args) {
         IMazeGenerator mg = new MyMazeGenerator();
-        Maze maze = mg.generate(1000, 1000);
+        Maze maze = mg.generate(10, 10);
         SearchableMaze searchableMaze = new SearchableMaze(maze);
         solveProblem(searchableMaze, new BreadthFirstSearch());
-        solveProblem(searchableMaze, new DepthFirstSearch());
+        //solveProblem(searchableMaze, new DepthFirstSearch());
         solveProblem(searchableMaze, new BestFirstSearch());
     }
 
@@ -25,7 +25,7 @@ public class RunSearchOnMaze {
         Solution solution = searcher.solve(domain);
         System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", searcher.getName(), searcher.getNumberOfNodesEvaluated()));
 
-        //printIndepth( domain,  solution);
+        printIndepth( domain,  solution);
 
         time = System.currentTimeMillis()-time;
         System.out.println("Total time(milliseconds): " + time);

@@ -26,7 +26,8 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Set<AState> visitedVertices = new HashSet<>();
 
         //fill solution
-        if(null != runAlgorithm(searchProblem, startState, goalState, visitedVertices)){
+        AState lastStep = runAlgorithm(searchProblem, startState, goalState, visitedVertices);
+        if(null != lastStep){
             AState stepInSolution = goalState;
             while(null != stepInSolution){
                 solution.add(0, stepInSolution);

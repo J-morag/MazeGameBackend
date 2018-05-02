@@ -65,7 +65,7 @@ public class SearchableMaze implements ISearchable{
         }
         //left cell
         if (isValid(mazeMap,rowPosition,colPosition-1)&& mazeMap[rowPosition][colPosition - 1] == 0)
-            allPossibleStates.add(new MazeState(mState.getCost()+1, new Position(rowPosition,colPosition+1)));
+            allPossibleStates.add(new MazeState(mState.getCost()+1, new Position(rowPosition,colPosition-1)));
         //upper left diagonal
         if (isValid(mazeMap,rowPosition - 1,colPosition-1)&& mazeMap[rowPosition - 1][colPosition - 1] == 0) {
             if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0 ||
