@@ -21,14 +21,13 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      * @param startState
      * @param goalState
      * @param visitedVertices - all vertices before start of search.
-     * @param pi - records which vertex was discovered by which.
      * @return - the goal position if found. Else, null.
      */
     @Override
-    protected AState runAlgorithm(AState startState, AState goalState, Set<AState> visitedVertices, HashMap<AState, AState> pi, HashMap<AState, Integer> distance){
+    protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> visitedVertices){
         AState u;
         neighborsStack.push(startState);
-        pi.put(startState,null);
+        numberOfNodesEvaluated++;
         while (!neighborsStack.isEmpty()){
             u = neighborsStack.pop(); //O(1)
             if(!visitedVertices.contains(u)){ //O(1)
@@ -36,12 +35,12 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
                 numberOfNodesEvaluated++;
                 if (u.equals(goalState)) return u;
                 visitedVertices.add(u); //O(1)
-                List<AState> neighbors = u.getSuccessors();
+                List<AState> neighbors = searchProblem.getAllPossibleStates(u);
                 for (int i = neighbors.size()-1; i >= 0 ; i--) {
                     AState v = neighbors.get(i); //O(1)
                     if(!visitedVertices.contains(v)){ //O(1)
                         neighborsStack.push(v); //O(1)
-                        pi.put(v, u); //O(1)
+                        v.parent = u; //O(1)
                     }
                 }
             }
