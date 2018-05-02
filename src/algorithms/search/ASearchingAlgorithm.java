@@ -23,14 +23,14 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
-        List<AState> vertices = searchProblem.getAllPossibleStates();
+        //List<AState> vertices = searchProblem.getAllPossibleStates();
         Set<AState> whiteVertices = new HashSet<>((int)(vertices.size()/0.75) +1);
                                                                 //(max number of entries divided by load factor) +1
         whiteVertices.addAll(vertices);
-        HashMap<AState, AState> pi = new HashMap<AState, AState>((int)(vertices.size()/0.75) +1 );
+        //HashMap<AState, AState> pi = new HashMap<AState, AState>((int)(vertices.size()/0.75) +1 );
 
         //fill solution
-        if(null != runAlgorithm(startState, goalState, whiteVertices, pi)){
+        if(null != runAlgorithm(searchProblem, startState, goalState, whiteVertices)){
             AState stepInSolution = goalState;
             while(null != stepInSolution){
                 solution.add(0, stepInSolution);
@@ -41,6 +41,6 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         else return null;
     }
 
-    protected abstract AState runAlgorithm(AState startState, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi);
+    protected abstract AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> whiteVertices);
 
 }
