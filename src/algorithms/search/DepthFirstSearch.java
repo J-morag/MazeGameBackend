@@ -49,28 +49,4 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
 
     }
 
-    /**
-     * recursive function for visiting a vertex in DFS.
-     * @param u - current vertex
-     * @param goalState - the goal state.
-     * @param whiteVertices - set of all white (undiscovered vertices).
-     * @param pi - maps parents.
-     * @return the goal state if found, Else null.
-     */
-    private AState DFSVisit(AState u, AState goalState, Set<AState> whiteVertices, HashMap<AState, AState> pi){
-        for (AState v:
-                u.getSuccessors()) {
-            if(whiteVertices.contains(v)){
-                numberOfNodesEvaluated++;
-                whiteVertices.remove(v);
-                pi.put(u, v);
-                if(v.equals(goalState)) return v;
-                else {
-                    AState searchBranchResult = DFSVisit(v, goalState, whiteVertices, pi);
-                    if (null != searchBranchResult) return searchBranchResult;
-                }
-            }
-        }
-        return null;
-    }
 }
