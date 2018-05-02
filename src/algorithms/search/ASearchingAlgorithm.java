@@ -28,7 +28,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         //fill solution
         AState lastStep = runAlgorithm(searchProblem, startState, goalState, visitedVertices);
         if(null != lastStep){
-            AState stepInSolution = goalState;
+            AState stepInSolution = lastStep;
             while(null != stepInSolution){
                 solution.add(0, stepInSolution);
                 stepInSolution = stepInSolution.getParent();
