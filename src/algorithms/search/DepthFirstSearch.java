@@ -20,31 +20,33 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      * run DFS search on graph.
      * @param startState
      * @param goalState
-     * @param visitedVertices - all vertices before start of search.
      * @return - the goal position if found. Else, null.
      */
     @Override
-    protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> visitedVertices){
+    protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState){
         AState u;
         neighborsStack.push(startState);
+        visitedVertices.add(startState);
         numberOfNodesEvaluated++;
         while (!neighborsStack.isEmpty()){
             u = neighborsStack.pop(); //O(1)
-            if(!visitedVertices.contains(u)){ //O(1)
+           // if(!visitedVertices.contains(u)){ //O(1)
 //                System.out.println(u);  //debug
                 numberOfNodesEvaluated++;
-                if (u.equals(goalState)) return u;
-                visitedVertices.add(u); //O(1)
+                if (u.equals(goalState))
+                    return u;
+              //  visitedVertices.add(u); //O(1)
                 List<AState> neighbors = searchProblem.getAllPossibleStates(u);
                 for (int i = neighbors.size()-1; i >= 0 ; i--) {
                     AState v = neighbors.get(i); //O(1)
                     if(!visitedVertices.contains(v)){ //O(1)
+                        visitedVertices.add(v);
                         neighborsStack.push(v); //O(1)
                         v.parent = u; //O(1)
                     }
                 }
             }
-        }
+        //}
         return null;
 
     }

@@ -8,9 +8,12 @@ import java.util.Set;
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
 
     protected int numberOfNodesEvaluated;
+    protected  Set<AState> visitedVertices; //all vertices before start of search
 
     public ASearchingAlgorithm() {
+
         this.numberOfNodesEvaluated = 0;
+        this.visitedVertices = new HashSet<>();
     }
 
     @Override
@@ -23,10 +26,10 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
-        Set<AState> visitedVertices = new HashSet<>();
+
 
         //fill solution
-        AState lastStep = runAlgorithm(searchProblem, startState, goalState, visitedVertices);
+        AState lastStep = runAlgorithm(searchProblem, startState, goalState);
         if(null != lastStep){
             AState stepInSolution = lastStep;
             while(null != stepInSolution){
@@ -38,5 +41,5 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         else return null;
     }
 
-    protected abstract AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState, Set<AState> visitedVertices);
+    protected abstract AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState);
 }

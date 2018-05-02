@@ -14,6 +14,7 @@ public class RunSearchOnMaze {
         solveProblem(searchableMaze, new BreadthFirstSearch());
         //solveProblem(searchableMaze, new DepthFirstSearch());
         //solveProblem(searchableMaze, new BestFirstSearch());
+
     }
 
 
@@ -30,9 +31,7 @@ public class RunSearchOnMaze {
         time = System.currentTimeMillis()-time;
         System.out.println("Total time(milliseconds): " + time);
 
-        //maze =putSolutionToMaze(solveProblem(searchableMaze,new BreadthFirstSearch ()),maze);
-        //System.out.println("Printing Maze Solution");
-        //print(maze);
+
 //                System.out.println("Solution path:");
 //        ArrayList<AState> solutionPath = solution.getSolutionPath();
 //        for (int i = 0; i < solutionPath.size(); i++) {
@@ -56,12 +55,5 @@ public class RunSearchOnMaze {
         //Printing Solution Path
         System.out.println(solution);
     }
-//
-//    private static Maze putSolutionToMaze(Solution sol, Maze maze) {
-//        for (int i = 0; i < sol.getSolutionPath().size(); i++) {
-//            MazeState current = (MazeState) sol.getSolutionPath().get(i);
-//            maze.getMaze()[current.getRow()][current.getCol()] = 5;
-//        }
-//        return maze;
-//    }
+
 }
