@@ -25,7 +25,7 @@ public class RunSearchOnMaze {
         Solution solution = searcher.solve(domain);
         System.out.println(String.format("'%s' algorithm - nodes evaluated: %s", searcher.getName(), searcher.getNumberOfNodesEvaluated()));
 
-        //printIndepth( domain,  solution);
+        printIndepth( domain,  solution);
 
         time = System.currentTimeMillis()-time;
         System.out.println("Total time(milliseconds): " + time);
