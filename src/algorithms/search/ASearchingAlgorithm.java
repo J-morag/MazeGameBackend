@@ -24,8 +24,6 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         AState startState = searchProblem.getStartState();
         AState goalState = searchProblem.getGoalState();
         Set<AState> visitedVertices = new HashSet<>((int)(vertices.size()/0.75) +1);
-        HashMap<AState, Integer> distance = new HashMap<AState, Integer>((int)(vertices.size()/0.75) +1 );
-        distance.put(startState, 0);
 
         //fill solution
         if(null != runAlgorithm(searchProblem, startState, goalState, visitedVertices)){
