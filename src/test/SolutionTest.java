@@ -26,7 +26,7 @@ public class SolutionTest {
             SearchableMaze searchableMaze = new SearchableMaze(maze);
 //        SearchableMaze searchableMaze2 = new SearchableMaze(maze);
             Maze maze1=maze;
-            maze =putSolutionToMaze(solveProblem(searchableMaze,new DepthFirstSearch()),maze);
+            maze =putSolutionToMaze(solveProblem(searchableMaze,new BreadthFirstSearch()),maze);
 //         maze1 =putSolutionToMaze(solveProblem(searchableMaze2,new BestFirstSearch()),maze);
 //                solveProblem(searchableMaze, new BreadthFirstSearch());
 //        solveProblem(searchableMaze, new DepthFirstSearch());
