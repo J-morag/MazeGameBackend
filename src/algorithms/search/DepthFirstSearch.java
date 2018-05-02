@@ -31,7 +31,7 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
         while (!neighborsStack.isEmpty()){
             u = neighborsStack.pop(); //O(1)
             if(!visitedVertices.contains(u)){ //O(1)
-//                System.out.println(u);  //debug
+///                System.out.println(u);  //debug
                 numberOfNodesEvaluated++;
                 if (u.equals(goalState)) return u;
                 visitedVertices.add(u); //O(1)
