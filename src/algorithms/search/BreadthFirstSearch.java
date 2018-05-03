@@ -25,6 +25,8 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
      */
     @Override
     protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState){
+        visitedVertices.clear();
+        greyVerticesQueue.clear();
         //BFS initialization
         if(searchProblem == null)
             return null;

@@ -24,6 +24,8 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
      */
     @Override
     protected AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState){
+        neighborsStack.clear();
+        visitedVertices.clear();
         AState u;
         neighborsStack.push(startState);
         visitedVertices.add(startState);
