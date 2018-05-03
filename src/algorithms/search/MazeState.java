@@ -23,8 +23,7 @@ public class MazeState extends AState{
 
     @Override
     public int hashCode() {
-
-        return position.toString().hashCode();
+        return position.hashCode();
     }
 
     @Override

@@ -98,7 +98,7 @@ public class Maze
 	}
 
 	public int[][] getMazeMap() {
-		return this.mazeMap;
+		return mazeMap;
 	}
 
 	/**
