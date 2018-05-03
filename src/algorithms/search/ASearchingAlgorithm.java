@@ -39,9 +39,8 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
                 solution.add(0, stepInSolution);
                 stepInSolution = stepInSolution.getParent();
             }
-            return solution;
         }
-        else return null;
+        return solution;
     }
 
     protected abstract AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState);

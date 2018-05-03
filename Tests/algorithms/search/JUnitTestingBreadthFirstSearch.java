@@ -24,13 +24,10 @@ class JUnitTestingBreadthFirstSearch {
 
     @Test
     void solve() {
-
         long time = System.currentTimeMillis();
         bfs.solve(searchableMaze);
         time = System.currentTimeMillis() - time ;
         assertTrue(time<20000);
-
-
     }
 
 //    @Test

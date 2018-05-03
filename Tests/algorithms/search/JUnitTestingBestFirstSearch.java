@@ -31,4 +31,18 @@ class JUnitTestingBestFirstSearch {
         ISearchable searchProblem = null;
         assertEquals(null, best.solve(searchProblem));
     }
+
+    @Test
+    void sameSolutionLength() {
+        MyMazeGenerator mmg = new MyMazeGenerator();
+        Maze maze = mmg.generate(1000, 1000);
+        ISearchable searchProblem = new SearchableMaze(maze);
+        BestFirstSearch best = new BestFirstSearch();
+        BreadthFirstSearch bfs = new BreadthFirstSearch();
+        for (int i = 0; i < 2 ; i++) {
+            Solution bestSolution = best.solve(searchProblem);
+            Solution bfsSolution = bfs.solve(searchProblem);
+            assertEquals(bestSolution.getSolutionPath().size(), bfsSolution.getSolutionPath().size());
+        }
+    }
 }
