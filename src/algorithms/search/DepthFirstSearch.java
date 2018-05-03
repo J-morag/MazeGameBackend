@@ -11,6 +11,9 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
         neighborsStack = new LinkedList<>();
     }
 
+    /**
+     * returns the name of the algorithm.
+     */
     @Override
     public String getName() {
         return "DepthFirstSearch";
@@ -30,23 +33,19 @@ public class DepthFirstSearch extends ASearchingAlgorithm {
         numberOfNodesEvaluated++;
         while (!neighborsStack.isEmpty()){
             u = neighborsStack.pop(); //O(1)
-           // if(!visitedVertices.contains(u)){ //O(1)
-//                System.out.println(u);  //debug
                 numberOfNodesEvaluated++;
                 if (u.equals(goalState))
                     return u;
-              //  visitedVertices.add(u); //O(1)
                 List<AState> neighbors = searchProblem.getAllPossibleStates(u);
                 for (int i = neighbors.size()-1; i >= 0 ; i--) {
                     AState v = neighbors.get(i); //O(1)
                     if(!visitedVertices.contains(v)){ //O(1)
-                        visitedVertices.add(v);
+                        visitedVertices.add(v); //O(1)
                         neighborsStack.push(v); //O(1)
                         v.parent = u; //O(1)
                     }
                 }
             }
-        //}
         return null;
 
     }

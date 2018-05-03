@@ -18,11 +18,18 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         this.visitedVertices = new HashSet<>((int)(600000/0.75 +1));
     }
 
+    /**
+     * @return how many nodes the algorithm evaluates
+     */
     @Override
     public int getNumberOfNodesEvaluated() {
         return numberOfNodesEvaluated;
     }
 
+    /**
+     * @param searchProblem
+     * @return the solution path on the maze
+     */
     public Solution solve(ISearchable searchProblem) {
         if(searchProblem == null)
             return null;
@@ -43,5 +50,9 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
         return solution;
     }
 
+    /**
+     * Helper method - called by 'solve', and implemented in each kind of searching algorithms
+     * @return the last state in the solution
+     */
     protected abstract AState runAlgorithm(ISearchable searchProblem, AState startState, AState goalState);
 }

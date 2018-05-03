@@ -3,20 +3,33 @@ package algorithms.search;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * An abstract class. Represents a state.
+ * Each state has cost and parent (the state it came from)
+ */
 public abstract class AState implements Comparable{
 
     protected double cost;
     protected AState parent;
 
+    /**
+     * Constructor. Gets the cost of the state.
+     */
     public AState(double cost){
         this.cost = cost;
         this.parent = null;
     }
 
+    /**
+     * returns the cost of the state.
+     */
     public double getCost() {
         return cost;
     }
 
+    /**
+     * returns the parent state.
+     */
     public AState getParent() {
         return parent;
     }

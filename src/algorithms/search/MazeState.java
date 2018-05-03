@@ -5,6 +5,9 @@ import algorithms.mazeGenerators.Position;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Represents a state in a maze.
+ */
 public class MazeState extends AState{
 
     private Position position;

@@ -75,6 +75,7 @@ public class SearchableMaze implements ISearchable{
         return allPossibleStates;
     }
 
+    //check validity of position in the maze
     private boolean isValid (int[][] mazeMap, int row, int column){
         if (row < 0 || row >= mazeMap.length || column < 0 || column >= mazeMap[0].length)
             return false;

@@ -84,6 +84,7 @@ public class MyMazeGenerator extends AMazeGenerator
 		return rndPosition;
 	}
 
+	//check validity of a given position
 	private boolean isValidPosition (int[][] mazeMap, Position cell){
         if (cell.getRowIndex() < 0 || cell.getRowIndex() >= mazeMap.length || cell.getColumnIndex() < 0 || cell.getColumnIndex() > mazeMap[0].length)
             return false;

@@ -2,6 +2,9 @@ package algorithms.search;
 
 import java.util.*;
 
+/**
+ * A searching algorithm. Returns the shortest solution path.
+ */
 public class BreadthFirstSearch extends ASearchingAlgorithm {
 
     boolean debug = false;
@@ -12,6 +15,9 @@ public class BreadthFirstSearch extends ASearchingAlgorithm {
         greyVerticesQueue = new LinkedList<AState>();
     }
 
+    /**
+     * returns the name of the algorithm.
+     */
     @Override
     public String getName() {
         return "BreadthFirstSearch";
