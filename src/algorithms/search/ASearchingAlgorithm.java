@@ -11,7 +11,7 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
     protected  Set<AState> visitedVertices; //all vertices before start of search
 
     /**
-     * constructor
+     * Constructor
      */
     public ASearchingAlgorithm() {
         this.numberOfNodesEvaluated = 0;

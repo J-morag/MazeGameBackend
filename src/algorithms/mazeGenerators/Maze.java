@@ -106,6 +106,7 @@ public class Maze
 	 */
 	
 	public void print() {
+
 		System.out.println(this.toString());
 	}
 
