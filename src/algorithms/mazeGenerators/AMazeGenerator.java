@@ -37,8 +37,11 @@ public abstract class AMazeGenerator implements IMazeGenerator
 		long beforeGen, afterGen;
 
 		//check validity of measures of the maze
-		if(numOfRows < 0 || numOfColumns < 0)
-			throw new IllegalArgumentException("illegal number of rows or columns");
+		if(numOfRows < 0 || numOfColumns < 0){
+//			throw new IllegalArgumentException("illegal number of rows or columns"); TODO re-enable exceptions in part C
+			numOfColumns = 100;
+			numOfRows = 100;
+		}
 
 		if(numOfRows == 0 && numOfColumns == 0) //there is no maze to generate
 			return 0;

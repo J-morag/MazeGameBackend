@@ -49,32 +49,32 @@ public class Maze
 	 * @param mazeMap - 2D int array that represents the body of the map. must not be jagged.
 	 * @param startPosition - start position. must fall withing the boundary of the maze. deep copied.
 	 * @param endPosition - end position. must fall withing the boundary of the maze. deep copied.
-	 * @throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
-	 * @throws IllegalArgumentException - if either the start or end positions are outside the map, or null, or  they overlap.
+	 * //@throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
+	 * //@throws IllegalArgumentException - if either the start or end positions are outside the map, or null, or  they overlap.
 	 */
 
 	public Maze(int[][] mazeMap, Position startPosition, Position endPosition) {
 		final int minVectorLength = 5;
-		//check nulls
-		if (null==mazeMap || null==startPosition || null==endPosition) throw new IllegalArgumentException("null argument.");
-		//check map validity
-		int numRows = mazeMap.length;
-		if (numRows < minVectorLength) throw new IllegalArgumentException("Number of rows must be larger than " + minVectorLength);
-		if (0==numRows) throw new IllegalArgumentException("empty map");
-		int numColumns = mazeMap[0].length;
-		if (numColumns< minVectorLength) throw new IllegalArgumentException("Number of columns must be larger than " + minVectorLength);
-		if (0==numColumns) throw new IllegalArgumentException("empty map");
-		for (int[] row : mazeMap) {
-			if (row.length != numColumns) throw new IllegalArgumentException("jagged map");
-		}
-		//check that start and end positions are within the map.
-		if (startPosition.getRowIndex() > numRows-1 || startPosition.getColumnIndex() > numColumns-1
-				|| startPosition.getRowIndex() < 0 || startPosition.getColumnIndex() < 0
-				|| endPosition.getRowIndex() > numRows-1 || endPosition.getColumnIndex() > numColumns-1
-				|| endPosition.getRowIndex() < 0 || endPosition.getColumnIndex() < 0)
-			throw new IllegalArgumentException("position out of bounds");
-		//check that the start and end positions don't overlap
-		if (startPosition.equals(endPosition)) throw new IllegalArgumentException("overlapping start and end positions");
+//		int numRows = mazeMap.length;
+//		int numColumns = mazeMap[0].length;
+//		//check nulls TODO re-enable exceptions in part C
+//		if (null==mazeMap || null==startPosition || null==endPosition) throw new IllegalArgumentException("null argument.");
+//		//check map validity
+//		if (numRows < minVectorLength) throw new IllegalArgumentException("Number of rows must be larger than " + minVectorLength);
+//		if (0==numRows) throw new IllegalArgumentException("empty map");
+//		if (numColumns< minVectorLength) throw new IllegalArgumentException("Number of columns must be larger than " + minVectorLength);
+//		if (0==numColumns) throw new IllegalArgumentException("empty map");
+//		for (int[] row : mazeMap) {
+//			if (row.length != numColumns) throw new IllegalArgumentException("jagged map");
+//		}
+//		//check that start and end positions are within the map.
+//		if (startPosition.getRowIndex() > numRows-1 || startPosition.getColumnIndex() > numColumns-1
+//				|| startPosition.getRowIndex() < 0 || startPosition.getColumnIndex() < 0
+//				|| endPosition.getRowIndex() > numRows-1 || endPosition.getColumnIndex() > numColumns-1
+//				|| endPosition.getRowIndex() < 0 || endPosition.getColumnIndex() < 0)
+//			throw new IllegalArgumentException("position out of bounds");
+//		//check that the start and end positions don't overlap
+//		if (startPosition.equals(endPosition)) throw new IllegalArgumentException("overlapping start and end positions");
 
 		this.mazeMap = mazeMap;
 		this.startPosition = new Position(startPosition);

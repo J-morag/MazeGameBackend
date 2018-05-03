@@ -23,11 +23,17 @@ public class SimpleMazeGenerator extends AMazeGenerator
 	 * @param numOfRows - the required number of rows in the maze.
 	 * @param numOfColumns - the required number of columns in the maze.
 	 * @return - a randomly generated maze.
-	 * @throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
-	 * @throws IllegalArgumentException - if either the start or end positions are outside the map, or  they overlap.
+	 * //@throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
+	 * //@throws IllegalArgumentException - if either the start or end positions are outside the map, or  they overlap.
 	 */
 	@Override
 	public Maze generate(int numOfRows, int numOfColumns) {
+		if(numOfRows < 3 || numOfColumns < 3){
+//			throw new IllegalArgumentException("illegal number of rows or columns"); TODO re-enable exceptions in part C
+			numOfColumns = 100;
+			numOfRows = 100;
+		}
+
 		int[][] mazeMap = getMapWithRandomWalls(numOfRows, numOfColumns, 0.6);
 		Position startPos = super.getStartOrEndPosition(true, mazeMap);
 		Position endPos = super.getStartOrEndPosition(false, mazeMap);
