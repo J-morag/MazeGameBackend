@@ -15,8 +15,20 @@ class JUnitTestingBestFirstSearch {
 
     @Test
     void getName() {
-        BestFirstSearch bfs = new BestFirstSearch();
-        assertEquals("BestFirstSearch", bfs.getName());
+        BestFirstSearch best = new BestFirstSearch();
+        assertEquals("BestFirstSearch", best.getName());
     }
 
+    @Test
+    void getNumberOfNodesEvaluated() {
+        BestFirstSearch best = new BestFirstSearch();
+        assertTrue(best.getNumberOfNodesEvaluated() > 0);
+    }
+
+    @Test
+    void solve() {
+        BestFirstSearch best = new BestFirstSearch();
+        ISearchable searchProblem = null;
+        assertEquals(null, best.solve(searchProblem));
+    }
 }

@@ -3,7 +3,10 @@ package test;
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
 import algorithms.search.*;
+
+import java.util.ArrayList;
 
 
 public class RunSearchOnMaze {
@@ -31,11 +34,11 @@ public class RunSearchOnMaze {
         System.out.println("Total time(milliseconds): " + time);
 
 
-//                System.out.println("Solution path:");
-//        ArrayList<AState> solutionPath = solution.getSolutionPath();
-//        for (int i = 0; i < solutionPath.size(); i++) {
-//            System.out.println(String.format("%s. %s",i,solutionPath.get(i)));
-//        }
+        System.out.println("Solution path:");
+        ArrayList<AState> solutionPath = solution.getSolutionPath();
+        for (int i = 0; i < solutionPath.size(); i++) {
+            System.out.println(String.format("%s. %s",i,solutionPath.get(i)));
+        }
 
 
         //print solution on maze

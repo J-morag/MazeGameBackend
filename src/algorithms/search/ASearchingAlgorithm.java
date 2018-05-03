@@ -2,11 +2,17 @@ package algorithms.search;
 
 import java.util.*;
 
+/**
+ * An abstract class of searching algorithm
+ */
 public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
 
     protected int numberOfNodesEvaluated;
     protected  Set<AState> visitedVertices; //all vertices before start of search
 
+    /**
+     * constructor
+     */
     public ASearchingAlgorithm() {
         this.numberOfNodesEvaluated = 0;
         this.visitedVertices = new HashSet<>((int)(600000/0.75 +1));
@@ -18,6 +24,8 @@ public abstract class ASearchingAlgorithm implements ISearchingAlgorithm {
     }
 
     public Solution solve(ISearchable searchProblem) {
+        if(searchProblem == null)
+            return null;
         numberOfNodesEvaluated = 0;
         Solution solution = new Solution();
         AState startState = searchProblem.getStartState();
