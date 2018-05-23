@@ -9,80 +9,80 @@ import java.util.Objects;
 
 public class Position
 {
-	/**
-	 * row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
-	 */
-	
-	private int row;
+    /**
+     * row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
+     */
 
-	/**
-	 * column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
-	 */
-	
-	private int column;
+    private int row;
 
-	/**
-	 * constructor.
-	 * @param row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
-	 * @param column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
-	 */
-	public Position(int row, int column){
-		this.row=row;
-		this.column = column;
-	}
+    /**
+     * column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
+     */
 
-	/**
-	 * copy constructor.
-	 * @param position - the Position to copy.
-	 */
-	public Position(Position position) {
-		this.row=position.row;
-		this.column =position.column;
-	}
+    private int column;
 
-	/**
-	 * returns the row index.
-	 */
-	
-	public int getRowIndex() {
-		return row;
-	}
+    /**
+     * constructor.
+     * @param row - row coordinate. like 'i' in a matrix. like 'y' in euclidean geometry.
+     * @param column - column coordinate. like 'j' in a matrix. like 'x' in euclidean geometry.
+     */
+    public Position(int row, int column){
+        this.row=row;
+        this.column = column;
+    }
 
-	/**
-	 * returns the column index.
-	 */
-	
-	public int getColumnIndex() {
-		return column;
-	}
+    /**
+     * copy constructor.
+     * @param position - the Position to copy.
+     */
+    public Position(Position position) {
+        this.row=position.row;
+        this.column =position.column;
+    }
 
-	/**
-	 * toString override.
-	 */
-	@Override
-	public String toString() {
-		return "{"+row+","+column+"}";
-	}
+    /**
+     * returns the row index.
+     */
 
-	/**
-	 *
-	 * @param pos - position to compare to
-	 * @return - true if they are equal
-	 */
-	@Override
-	public boolean equals(Object pos){
-		if (null == pos) return false;
-		if (!(pos instanceof  Position)) return false;
-		if (row==((Position) pos).row && column ==((Position) pos).column) return true;
-		else return false;
-	}
+    public int getRowIndex() {
+        return row;
+    }
 
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = hash*31 + row;
-		hash = hash*31 + column;
-		return hash;
-	}
+    /**
+     * returns the column index.
+     */
+
+    public int getColumnIndex() {
+        return column;
+    }
+
+    /**
+     * toString override.
+     */
+    @Override
+    public String toString() {
+        return "{"+row+","+column+"}";
+    }
+
+    /**
+     *
+     * @param pos - position to compare to
+     * @return - true if they are equal
+     */
+    @Override
+    public boolean equals(Object pos){
+        if (null == pos) return false;
+        if (!(pos instanceof  Position)) return false;
+        if (row==((Position) pos).row && column ==((Position) pos).column) return true;
+        else return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = hash*31 + row;
+        hash = hash*31 + column;
+        return hash;
+    }
 }
 

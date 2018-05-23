@@ -7,54 +7,54 @@ package algorithms.mazeGenerators;
 
 public class Maze
 {
-	/**
-	 * Start position. Represented by 'S' when maze is printed.
-	 */
-	
-	private Position startPosition;
+    /**
+     * Start position. Represented by 'S' when maze is printed.
+     */
 
-	/**
-	 * Goal (end) position. Represented by 'E' when maze is printed.
-	 */
-	
-	private Position goalPosition;
+    private Position startPosition;
 
-	/**
-	 * int matrix representing the body of the maze. 0 := hallway, 1 := wall.
-	 */
-	
-	private int[][] mazeMap;
+    /**
+     * Goal (end) position. Represented by 'E' when maze is printed.
+     */
 
-	/**
-	 * default constructor.
-	 * Default: Maze will be 10*10. No Walls. Start(0,0), End(9,9);
-	 */
-	public Maze(){
-		this(new int[][]{
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0,0}	}, new Position(0,0), new Position(9,9));
-	}
+    private Position goalPosition;
 
-	/**
-	 * constructor.
-	 * Does not check that the maze is solvable.
-	 * @param mazeMap - 2D int array that represents the body of the map. must not be jagged.
-	 * @param startPosition - start position. must fall withing the boundary of the maze. deep copied.
-	 * @param endPosition - end position. must fall withing the boundary of the maze. deep copied.
-	 * //@throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
-	 * //@throws IllegalArgumentException - if either the start or end positions are outside the map, or null, or  they overlap.
-	 */
+    /**
+     * int matrix representing the body of the maze. 0 := hallway, 1 := wall.
+     */
 
-	public Maze(int[][] mazeMap, Position startPosition, Position endPosition) {
-		final int minVectorLength = 5;
+    private int[][] mazeMap;
+
+    /**
+     * default constructor.
+     * Default: Maze will be 10*10. No Walls. Start(0,0), End(9,9);
+     */
+    public Maze(){
+        this(new int[][]{
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0},
+                {0,0,0,0,0,0,0,0,0,0}	}, new Position(0,0), new Position(9,9));
+    }
+
+    /**
+     * constructor.
+     * Does not check that the maze is solvable.
+     * @param mazeMap - 2D int array that represents the body of the map. must not be jagged.
+     * @param startPosition - start position. must fall withing the boundary of the maze. deep copied.
+     * @param endPosition - end position. must fall withing the boundary of the maze. deep copied.
+     * //@throws IllegalArgumentException - if the given array is jagged, empty, or null, or smaller than 5 in any direction.
+     * //@throws IllegalArgumentException - if either the start or end positions are outside the map, or null, or  they overlap.
+     */
+
+    public Maze(int[][] mazeMap, Position startPosition, Position endPosition) {
+        final int minVectorLength = 5;
 //		int numRows = mazeMap.length;
 //		int numColumns = mazeMap[0].length;
 //		//check nulls TODO re-enable exceptions in part C
@@ -76,63 +76,63 @@ public class Maze
 //		//check that the start and end positions don't overlap
 //		if (startPosition.equals(endPosition)) throw new IllegalArgumentException("overlapping start and end positions");
 
-		this.mazeMap = mazeMap;
-		this.startPosition = new Position(startPosition);
-		this.goalPosition = new Position(endPosition);
-	}
+        this.mazeMap = mazeMap;
+        this.startPosition = new Position(startPosition);
+        this.goalPosition = new Position(endPosition);
+    }
 
-	/**
-	 * @return a copy of the start position
-	 */
-	
-	public Position getStartPosition() {
-		return new Position(startPosition);
-	}
+    /**
+     * @return a copy of the start position
+     */
 
-	/**
-	 * @return a copy of the goal position
-	 */
-	
-	public Position getGoalPosition() {
-		return new Position(goalPosition);
-	}
+    public Position getStartPosition() {
+        return new Position(startPosition);
+    }
 
-	public int[][] getMazeMap() {
-		return mazeMap;
-	}
+    /**
+     * @return a copy of the goal position
+     */
 
-	/**
-	 * prints the maze to the screen.
-	 */
-	
-	public void print() {
+    public Position getGoalPosition() {
+        return new Position(goalPosition);
+    }
 
-		System.out.println(this.toString());
-	}
+    public int[][] getMazeMap() {
+        return mazeMap;
+    }
 
-	@Override
-	public String toString() {
-		String ans = "";
-		int sRow = startPosition.getRowIndex();
-		int sColumn = startPosition.getColumnIndex();
-		int eRow = goalPosition.getRowIndex();
-		int eColumn = goalPosition.getColumnIndex();
-		for (int j=0; j<mazeMap.length+2 ; j++) System.out.print("✲ ");
-		ans += '\n';
-		for (int i=0; i<mazeMap.length ; i++){
-			ans += "✲ ";
-			for (int j=0; j<mazeMap.length ; j++){
-				if(i==sRow && j==sColumn) ans += "S";
-				else if(i==eRow && j==eColumn) ans += "E";
-				else if(0 == mazeMap[i][j]) ans += "☐";
-				else ans += '■';
-				ans += ' ';
-			}
-			ans += "✲\n";
-		}
-		for (int j=0; j<mazeMap.length+2 ; j++) ans += "✲ ";
-		ans += '\n';
-		return ans;
-	}
+    /**
+     * prints the maze to the screen.
+     */
+
+    public void print() {
+
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public String toString() {
+        String ans = "";
+        int sRow = startPosition.getRowIndex();
+        int sColumn = startPosition.getColumnIndex();
+        int eRow = goalPosition.getRowIndex();
+        int eColumn = goalPosition.getColumnIndex();
+        for (int j=0; j<mazeMap.length+2 ; j++) System.out.print("~ ");
+        ans += '\n';
+        for (int i=0; i<mazeMap.length ; i++){
+            ans += "| ";
+            for (int j=0; j<mazeMap[0].length ; j++){
+                if(i==sRow && j==sColumn) ans += "S";
+                else if(i==eRow && j==eColumn) ans += "E";
+                else if(0 == mazeMap[i][j]) ans += " ";
+                else ans += '+';
+                ans += ' ';
+            }
+            ans += "|\n";
+        }
+        for (int j=0; j<mazeMap.length+2 ; j++) ans += "~ ";
+        ans += '\n';
+        return ans;
+    }
 }
 

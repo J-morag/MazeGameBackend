@@ -38,7 +38,7 @@ public class Solution {
     public String toString() {
         String ans = "";
         for (AState state:
-             pathList) {
+                pathList) {
             ans = ans + state.toString() + ", ";
         }
         return ans;

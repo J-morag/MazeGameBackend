@@ -35,7 +35,7 @@ public class SearchableMaze implements ISearchable{
 
         //upper state
         if (isValid(mazeMap,rowPosition - 1,colPosition)&& mazeMap[rowPosition - 1][colPosition] == 0) {
-                allPossibleStates.add(new MazeState(mState.getCost() + 1, new Position(rowPosition - 1, colPosition)));
+            allPossibleStates.add(new MazeState(mState.getCost() + 1, new Position(rowPosition - 1, colPosition)));
         }
         //upper right diagonal
         if (isValid(mazeMap,rowPosition - 1,colPosition+1)&& mazeMap[rowPosition - 1][colPosition + 1] == 0) {

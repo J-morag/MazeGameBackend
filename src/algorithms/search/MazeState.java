@@ -20,8 +20,8 @@ public class MazeState extends AState{
     @Override
     public boolean equals(Object otherState) {
         return otherState != null &&
-           otherState instanceof AState &&
-            this.position.equals(((MazeState)otherState).position) ;
+                otherState instanceof AState &&
+                this.position.equals(((MazeState)otherState).position) ;
     }
 
     @Override

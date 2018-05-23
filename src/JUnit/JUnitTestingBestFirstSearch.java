@@ -10,6 +10,8 @@ import algorithms.search.SearchableMaze;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.Random;
+
 class JUnitTestingBestFirstSearch {
 
     SimpleMazeGenerator smg = new SimpleMazeGenerator();
@@ -60,6 +62,27 @@ class JUnitTestingBestFirstSearch {
     }
 
 //    @Test
+//    void randomizedTest() {
+//        Random rnd = new Random();
+//        for (int i = 0; i < 20; i++) {
+//            int columns = rnd.nextInt(500);
+//            int rows = rnd.nextInt(500);
+//            Maze maze = new MyMazeGenerator().generate(rows, columns);
+//            maze.print();
+//            // get the maze entrance
+//            Position startPosition = maze.getStartPosition();
+//            // print the position
+//            System.out.println(String.format("Start Position: %s",
+//                    startPosition)); // format "{row,column}"
+//            // prints the maze exit position
+//            System.out.println(String.format("Goal Position: %s",
+//                    maze.getGoalPosition()));
+//            //System.out.println("iteration "+i+" successful!");
+//
+//        }
+//    }
+
+    //    @Test
 //    void sameSolutionLength() {
 //        MyMazeGenerator mmg = new MyMazeGenerator();
 //        BestFirstSearch best = new BestFirstSearch();
