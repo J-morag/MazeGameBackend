@@ -23,7 +23,7 @@ public class AutomatedTests {
                 catch(Exception e){
                     System.out.println("\nexception: " +e.getClass()+". message:"+ e.getMessage());
                     System.out.println("on iteration "+(i+1)+" of "+iterations+" with "+testStrategy.getDescription());
-                    System.out.println("stack trace:");;
+                    System.out.println("stack trace:");
                     for (StackTraceElement s:
                             e.getStackTrace()) {
                         System.out.println(s);
