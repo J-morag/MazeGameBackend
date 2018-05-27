@@ -5,12 +5,15 @@ import algorithms.mazeGenerators.*;
 import java.util.Random;
 
 import static java.lang.System.exit;
+import static java.lang.System.setOut;
 
 public class AutomatedTests {
 
     public static void main(String[] args) {
-        testXTimes(true, 20, new RandomizedMazeGeneratorTest(500, 500, new MyMazeGenerator()));
-        testXTimes(true, 20, new RandomizedMazeGeneratorTest(500, 500, new SimpleMazeGenerator()));
+//        testXTimes(true, 20, new RandomizedMazeGeneratorTest(500, 500, new MyMazeGenerator()));
+//        testXTimes(true, 20, new RandomizedMazeGeneratorTest(500, 500, new SimpleMazeGenerator()));
+        testXTimes(true, 5, new mazeEncodingDecodingTest(1000, 1000, new MyMazeGenerator()));
+        testXTimes(true, 5, new mazeEncodingDecodingTest(1000, 1000, new SimpleMazeGenerator()));
     }
 
     private static void testXTimes(boolean catchExceptions, int iterations, TestStrategy testStrategy){
@@ -67,7 +70,7 @@ class RandomizedMazeGeneratorTest implements TestStrategy{
         Random rnd = new Random();
         columns = rnd.nextInt(columnsUpperBound);
         rows = rnd.nextInt(rowsUpperBound);
-        smallTest(mazeGenerator, rows, columns);
+        mazeGeneratorTest(mazeGenerator, rows, columns);
     }
 
     @Override
@@ -75,7 +78,7 @@ class RandomizedMazeGeneratorTest implements TestStrategy{
         return mazeGenerator.getClass()+" "+rows+", "+columns;
     }
 
-    private static void smallTest(IMazeGenerator mazeGenerator, int rows, int columns){
+    private static void mazeGeneratorTest(IMazeGenerator mazeGenerator, int rows, int columns){
         Maze maze = mazeGenerator.generate(rows, columns);
         maze.print();
         // get the maze entrance
@@ -88,6 +91,42 @@ class RandomizedMazeGeneratorTest implements TestStrategy{
                 maze.getGoalPosition()));
         //System.out.println("iteration "+i+" successful!");
     }
+
 }
+
+class mazeEncodingDecodingTest implements TestStrategy{
+
+    private int rowsUpperBound, columnsUpperBound;
+    private int rows, columns;
+    private IMazeGenerator mazeGenerator;
+
+    public mazeEncodingDecodingTest(int rowsUpperBound, int columnsUpperBound, IMazeGenerator mazeGenerator) {
+        this.rowsUpperBound = rowsUpperBound;
+        this.columnsUpperBound = columnsUpperBound;
+        this.mazeGenerator = mazeGenerator;
+    }
+
+    @Override
+    public void test() {
+        Random rnd = new Random();
+        columns = rnd.nextInt(columnsUpperBound);
+        rows = rnd.nextInt(rowsUpperBound);
+        encodeAndDecode(mazeGenerator, rows, columns);
+    }
+
+    private void encodeAndDecode(IMazeGenerator mazeGenerator, int rows, int columns) {
+        Maze maze = mazeGenerator.generate(rows, columns);
+        Maze mazeEncodedDecoded = new Maze(maze.toByteArray());
+        System.out.println(maze.equals(mazeEncodedDecoded));
+    }
+
+    @Override
+    public String getDescription() {
+        return mazeGenerator.getClass()+" "+rows+", "+columns;
+    }
+
+
+}
+
 
 

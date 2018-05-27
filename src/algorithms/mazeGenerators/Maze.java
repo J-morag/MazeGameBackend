@@ -1,6 +1,10 @@
 package algorithms.mazeGenerators;
 
 
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * Represents a 2D maze.
  */
@@ -81,10 +85,69 @@ public class Maze
         this.goalPosition = new Position(endPosition);
     }
 
+    public Maze(byte[] byteEncoding) {
+        int srcPos = 0;
+        byte[] bytesToBecomeInt = new byte[4];
+        System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
+        srcPos += 4;
+        int numRows = byteArrayToInt(bytesToBecomeInt);
+        System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
+        srcPos += 4;
+        int numColumns = byteArrayToInt(bytesToBecomeInt);
+        System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
+        srcPos += 4;
+
+        int startRow = byteArrayToInt(bytesToBecomeInt);
+        System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
+        srcPos += 4;
+        int startCol = byteArrayToInt(bytesToBecomeInt);
+        startPosition = new Position(startRow, startCol);
+
+        System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
+        srcPos += 4;
+        int endRow = byteArrayToInt(bytesToBecomeInt);
+        System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
+        srcPos += 4;
+        int endcol = byteArrayToInt(bytesToBecomeInt);
+        goalPosition = new Position(endRow, endcol);
+
+        mazeMap = buildMazeMapFromByteArr(byteEncoding, srcPos, numRows, numColumns);
+    }
+
+    /**
+     *
+     * @param byteEncoding encoding of Maze in bytes.
+     * @param bytesArrayIndex the index where the maze map encoding starts
+     * @param numRows number of rows
+     * @param numColumns number of columns
+     * @return a decoded maze map (int[][])
+     */
+    private int[][] buildMazeMapFromByteArr(byte[] byteEncoding,int bytesArrayIndex, int numRows, int numColumns){
+        int[][] mazeMap = new int[numRows][numColumns];
+        for (int i = 0; i < numRows ; i++) {
+            for (int j = 0; j < numColumns;) {
+                boolean MSB_isOn = ( byteEncoding[bytesArrayIndex] & (byte)-128 ) != 0;
+                if (MSB_isOn) mazeMap[i][j] = 1;
+                j++;
+
+                //now go over the next 7 maze locations
+                int divMeByTwo = 64; // 01000000 is 64, 00100000 is 32...
+                for (; j%8 != 0 && j < mazeMap[0].length; j++){
+                    boolean bitIsOn = ( byteEncoding[bytesArrayIndex] & (byte)divMeByTwo ) != 0;
+                    if (bitIsOn) mazeMap[i][j] = 1;
+                    divMeByTwo /= 2;
+                }
+
+                bytesArrayIndex++;
+            }
+
+        }
+        return mazeMap;
+    }
+
     /**
      * @return a copy of the start position
      */
-
     public Position getStartPosition() {
         return new Position(startPosition);
     }
@@ -92,13 +155,94 @@ public class Maze
     /**
      * @return a copy of the goal position
      */
-
     public Position getGoalPosition() {
         return new Position(goalPosition);
     }
 
     public int[][] getMazeMap() {
         return mazeMap;
+    }
+
+    /**
+     * encodes the Maze as a byte[].
+     * first set of 4 bytes represent the number of rows (int), next set is columns, start row, start column,
+     * end row, end column.
+     *
+     * index 12 onwards represent the contents of the maze.
+     * if the (number of columns % 8 != 0) , the byte at the end of each row will end in (#columns % 8) 0's.
+     * @return a byte[] encoding of the maze
+     */
+    public byte[] toByteArray(){
+        int numRows = mazeMap.length, numColumns=mazeMap[0].length;
+        int arraySize = 4 /*num rows*/ + 4 /*num columns*/ + 4 /*start row*/ + 4 /*start column*/ + 4 /*end row*/ + 4 /*end column*/;
+        int numBytesToRepresentMazeContent = numRows * (int)Math.ceil(numColumns/8.0);
+        arraySize += numBytesToRepresentMazeContent;
+        byte[] mazeAsByteArray = new byte[arraySize];
+        int index = 0;
+        System.arraycopy(intToByteArray(numRows), 0, mazeAsByteArray, index, 4);
+        index += 4;
+        System.arraycopy(intToByteArray(numColumns), 0, mazeAsByteArray, index, 4);
+        index += 4;
+        System.arraycopy(intToByteArray(startPosition.getRowIndex()), 0, mazeAsByteArray, index, 4);
+        index += 4;
+        System.arraycopy(intToByteArray(startPosition.getColumnIndex()), 0, mazeAsByteArray, index, 4);
+        index += 4;
+        System.arraycopy(intToByteArray(goalPosition.getRowIndex()), 0, mazeAsByteArray, index, 4);
+        index += 4;
+        System.arraycopy(intToByteArray(goalPosition.getColumnIndex()), 0, mazeAsByteArray, index, 4);
+        index += 4;
+        byte[] mazeMapAsByteArr = mazeMapToByteArray();
+        System.arraycopy(mazeMapAsByteArr, 0, mazeAsByteArray, index, mazeMapAsByteArr.length);
+        return mazeAsByteArray;
+    }
+
+    /**
+     * converts integer to w'2 complement array of bytes. byte[1] contains the MSB.
+     * @param integer - integer to convert.
+     * @return byte array size 4 representing the integer.
+     */
+    public static byte[] intToByteArray(int integer){
+        return ByteBuffer.allocate(4).putInt(integer).array();
+    }
+
+    /**
+     * converts byte[] to integer. bytes beyond 4 (index 3) will be cut.
+     * @param bytes byte array to convert to integer
+     * @return integer representation
+     */
+    public static int byteArrayToInt(byte[] bytes){
+        return ByteBuffer.wrap(bytes).getInt();
+    }
+
+    /**
+     * converts the the maze map to an array of bytes, where every cell is represented by a single bit within a byte.
+     * if the (number of columns % 8 != 0) , the byte at the end of each row will end in (#columns % 8) 0's.
+     * @return byte[] representing the maze map.
+     */
+    public byte[] mazeMapToByteArray(){
+        byte[] byteArr = new byte[mazeMap.length * (int)Math.ceil(mazeMap[0].length/8.0)];
+        int byteArrIndex = 0;
+        byte nextByte = 0x00;
+        for (int i = 0; i < mazeMap.length; i++) { //rows
+            for (int j = 0; j < mazeMap[0].length;) { //inside row (columns)
+                // 10000000 is -124
+                if (1 == mazeMap[i][j]) nextByte += (byte)-128;
+                j++;
+
+                //now go over the next 7 maze locations
+                int divByTwo = 64; // 01000000 is 64, 00100000 is 32...
+                for (; j%8 != 0 && j < mazeMap[0].length; j++){
+                    if (1 == mazeMap[i][j]) nextByte += divByTwo;
+                    divByTwo /= 2;
+                }
+
+                byteArr[byteArrIndex] = nextByte;
+                byteArrIndex++;
+                nextByte = 0x00;
+            }
+
+        }
+        return byteArr;
     }
 
     /**
@@ -117,7 +261,7 @@ public class Maze
         int sColumn = startPosition.getColumnIndex();
         int eRow = goalPosition.getRowIndex();
         int eColumn = goalPosition.getColumnIndex();
-        for (int j=0; j<mazeMap.length+2 ; j++) System.out.print("~ ");
+        for (int j=0; j<mazeMap.length+1 ; j++) System.out.print("~ ");
         ans += '\n';
         for (int i=0; i<mazeMap.length ; i++){
             ans += "| ";
@@ -130,9 +274,34 @@ public class Maze
             }
             ans += "|\n";
         }
-        for (int j=0; j<mazeMap.length+2 ; j++) ans += "~ ";
+        for (int j=0; j<mazeMap.length+1 ; j++) ans += "~ ";
         ans += '\n';
         return ans;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Maze maze = (Maze) o;
+        boolean b1 = startPosition.equals(maze.startPosition);
+        boolean b2 = goalPosition.equals(maze.goalPosition);
+        boolean b3 = true;
+        for(int i=0; i<mazeMap.length; i++){
+            b3 = b3 && Arrays.equals(mazeMap[i], maze.mazeMap[i]);
+        }
+        return b1 && b2 && b3;
+    }
+
+    @Override
+    public int hashCode() {
+
+        int result = Objects.hash(startPosition, goalPosition);
+        for (int[] row:
+             mazeMap) {
+            result = 31 * result + Arrays.hashCode(row);
+        }
+        return result;
     }
 }
 
