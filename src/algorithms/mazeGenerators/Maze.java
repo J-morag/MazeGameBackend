@@ -86,6 +86,7 @@ public class Maze
     }
 
     public Maze(byte[] byteEncoding) {
+        // TODO add validity check
         int srcPos = 0;
         byte[] bytesToBecomeInt = new byte[4];
         System.arraycopy(byteEncoding, srcPos, bytesToBecomeInt, 0, 4);
@@ -197,7 +198,7 @@ public class Maze
     }
 
     /**
-     * converts integer to w'2 complement array of bytes. byte[1] contains the MSB.
+     * converts integer to 2's complement array of bytes. byte[1] contains the MSB.
      * @param integer - integer to convert.
      * @return byte array size 4 representing the integer.
      */
