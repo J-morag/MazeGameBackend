@@ -18,31 +18,36 @@ public class MyDecompressorInputStream extends InputStream {
 
     @Override
     public int read() throws IOException {
-        return 0;
+        return in.read();
     }
 
     @Override
-    public byte[] readAllBytes() throws IOException {
-        try {
-            return decompress(super.readAllBytes());
-        } catch (DataFormatException e) {
-            e.printStackTrace();
-            System.out.println("Error: Invalid input format");
-        }
-        return new byte[0];
+    public int read(byte[] b) throws IOException {
+        return super.read(b);
     }
 
-    private byte[] decompress(byte[] b) throws DataFormatException, IOException {
-        Inflater inflater = new Inflater();
-        inflater.setInput(b);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(b.length);
-        byte[] buffer = new byte[1024];
-        while (!inflater.finished()) {
-            int count = inflater.inflate(buffer);
-            outputStream.write(buffer, 0, count);
-        }
-        outputStream.close();
-        return outputStream.toByteArray();
+//    @Override
+//    public byte[] readAllBytes() throws IOException {
+//        try {
+//            return decompress(super.readAllBytes());
+//        } catch (DataFormatException e) {
+//            e.printStackTrace();
+//            System.out.println("Error: Invalid input format");
+//        }
+//        return new byte[0];
+//    }
 
-    }
+//    private byte[] decompress(byte[] b) throws DataFormatException, IOException {
+//        Inflater inflater = new Inflater();
+//        inflater.setInput(b);
+//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(b.length);
+//        byte[] buffer = new byte[1024];
+//        while (!inflater.finished()) {
+//            int count = inflater.inflate(buffer);
+//            outputStream.write(buffer, 0, count);
+//        }
+//        outputStream.close();
+//        return outputStream.toByteArray();
+//
+//    }
 }
