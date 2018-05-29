@@ -62,4 +62,68 @@ public class Server {
         //LOG.info("Stopping server..");
         stop = true;
     }
+
+    public static class Configurations{
+
+        private HashMap<String, String> configValues;
+        private HashMap<String, String[]> acceptedConfigValues;
+
+        public Configurations(){
+
+            configValues = new HashMap<>();
+            acceptedConfigValues = new HashMap<>();
+
+            //initialize accepted values
+            acceptedConfigValues.put("generatorClass", new String[]{"MyMazeGenerator", "SimpleMazeGenerator"});
+
+            //initialize fields with default values
+            configValues.put("generatorClass", "MyMazeGenerator");
+
+
+            Scanner input = null;
+
+            try {
+
+                input = new Scanner("Resources/config.properties");
+
+                // load a properties file
+                this.load(input);
+
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (input != null) {
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        private String getProperty(String prop) {
+            return null;
+        }
+
+        private void load(Scanner input) {
+            while(input.hasNextLine()) {
+                final String line = input.nextLine();
+                String keyAndVal[] = line.split("-");
+                //correct format and configuration exists and value is accepted
+                if (2 == keyAndVal.length && configValues.containsKey(keyAndVal[0]) && arrayContainsString(acceptedConfigValues.get(keyAndVal[0]), keyAndVal[1])){
+                    configValues.put(keyAndVal[0], keyAndVal[1]);
+                }
+            }
+        }
+
+        private static boolean arrayContainsString(String[] arr, String str){
+            for (String s:
+                 arr) {
+                if (s.equals(str)) return true;
+            }
+            return false;
+        }
+    }
 }

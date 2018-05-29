@@ -66,22 +66,22 @@ public class RunCompressDecompressMaze {
         }
 
         byte savedMazeBytes[] = new byte[0];
-        byte savedMazeBytesFirstHalf[] = new byte[maze.toByteArray().length/2];
-        byte savedMazeBytesSecondHalf[] = new byte[(int)Math.ceil(maze.toByteArray().length/2.0)];
+//        byte savedMazeBytesFirstHalf[] = new byte[maze.toByteArray().length/2];
+//        byte savedMazeBytesSecondHalf[] = new byte[(int)Math.ceil(maze.toByteArray().length/2.0)];
         try {
             //read maze from file
             InputStream in = new MyDecompressorInputStream(new FileInputStream(mazeFileName));
             savedMazeBytes = new byte[maze.toByteArray().length];
-//            in.read(savedMazeBytes);
-            in.read(savedMazeBytesFirstHalf);
-            in.read(savedMazeBytesSecondHalf);
+            in.read(savedMazeBytes);
+//            in.read(savedMazeBytesFirstHalf);
+//            in.read(savedMazeBytesSecondHalf);
             in.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        System.arraycopy(savedMazeBytesFirstHalf, 0, savedMazeBytes, 0, maze.toByteArray().length/2);
-        System.arraycopy(savedMazeBytesSecondHalf, 0, savedMazeBytes, maze.toByteArray().length/2, (int)Math.ceil(maze.toByteArray().length/2.0));
+//        System.arraycopy(savedMazeBytesFirstHalf, 0, savedMazeBytes, 0, maze.toByteArray().length/2);
+//        System.arraycopy(savedMazeBytesSecondHalf, 0, savedMazeBytes, maze.toByteArray().length/2, (int)Math.ceil(maze.toByteArray().length/2.0));
 
         Maze loadedMaze = new Maze(savedMazeBytes);
         boolean areMazesEquals = Arrays.equals(loadedMaze.toByteArray(),maze.toByteArray());

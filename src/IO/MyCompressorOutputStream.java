@@ -30,18 +30,18 @@ public class MyCompressorOutputStream extends OutputStream{
         out.write(b);
     }
 
-//    private byte[] compress(byte[] b) throws IOException {
-//        deflater.setInput(b);
-//        ByteArrayOutputStream os = new ByteArrayOutputStream(b.length);
-//        deflater.finish();
-//        byte[] buffer = new byte[1024];
-//        while (!deflater.finished()) {
-//            int count = deflater.deflate(buffer); // returns the generated code... index
-//            os.write(buffer, 0, count);
-//        }
-//        os.close();
-//        return os.toByteArray();
-//    }
+    private byte[] compress(byte[] b) throws IOException {
+        deflater.setInput(b);
+        ByteArrayOutputStream os = new ByteArrayOutputStream(b.length);
+        deflater.finish();
+        byte[] buffer = new byte[1024];
+        while (!deflater.finished()) {
+            int count = deflater.deflate(buffer); // returns the generated code... index
+            os.write(buffer, 0, count);
+        }
+        os.close();
+        return os.toByteArray();
+    }
 
 //    /**
 //     * converts integer to 2's complement array of bytes. byte[1] contains the MSB.
