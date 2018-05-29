@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.HashMap;
+import java.util.Scanner;
 
 
 //import Server.Strategies.IServerStrategy;
@@ -63,15 +65,15 @@ public class Server {
             acceptedConfigValues = new HashMap<>();
 
             //initialize accepted values
-            acceptedConfigValues.put("generatorClass", new String[]{"MyMazeGenerator", "SimpleMazeGenerator"});
+            acceptedConfigValues.put("GeneratorClass", new String[]{"MyMazeGenerator", "SimpleMazeGenerator"});
 
             //initialize fields with default values
-            configValues.put("generatorClass", "MyMazeGenerator");
+            configValues.put("GeneratorClass", "MyMazeGenerator");
 
 
             Scanner input = null;
 
-            try {
+//            try {
 
                 input = new Scanner("Resources/config.properties");
 
@@ -79,21 +81,21 @@ public class Server {
                 this.load(input);
 
 
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            } finally {
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
+//            } finally {
                 if (input != null) {
-                    try {
+//                    try {
                         input.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
             }
         }
 
-        private String getProperty(String prop) {
-            return null;
+        public String getProperty(String prop) {
+            return configValues.get(prop);
         }
 
         private void load(Scanner input) {
