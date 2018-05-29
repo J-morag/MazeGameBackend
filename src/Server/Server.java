@@ -1,9 +1,13 @@
 package Server;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.util.Iterator;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.HashMap;
@@ -83,38 +87,71 @@ public class Server {
 
             Scanner input = null;
 
-//            try {
+            try {
 
-                input = new Scanner("Resources/config.properties");
+                input = new Scanner(new File("Resources/config.properties"));
 
                 // load a properties file
                 this.load(input);
 
 
-//            } catch (IOException ex) {
-//                ex.printStackTrace();
-//            } finally {
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
                 if (input != null) {
 //                    try {
                         input.close();
 //                    } catch (IOException e) {
 //                        e.printStackTrace();
 //                    }
-//                }
+                }
             }
         }
 
         public String getProperty(String prop) {
             return configValues.get(prop);
         }
+        public void setProperty(String prop, String value) {
+            if (arrayContainsString(acceptedConfigValues.get(prop), value)){
+                configValues.put(prop, value);
+            }
+        }
 
         private void load(Scanner input) {
             while(input.hasNextLine()) {
                 final String line = input.nextLine();
                 String keyAndVal[] = line.split("-");
-                //correct format and configuration exists and value is accepted
+
+                //if correct format and configuration exists and value is accepted
                 if (2 == keyAndVal.length && configValues.containsKey(keyAndVal[0]) && arrayContainsString(acceptedConfigValues.get(keyAndVal[0]), keyAndVal[1])){
                     configValues.put(keyAndVal[0], keyAndVal[1]);
+                }
+            }
+        }
+
+        public void store(){
+            BufferedWriter output = null;
+
+            try {
+
+                output = new BufferedWriter(new FileWriter("Resources/config.properties"));
+
+                Iterator it = configValues.entrySet().iterator();
+                while (it.hasNext()) {
+                    HashMap.Entry pair = (HashMap.Entry)it.next();
+                    output.write(pair.getKey()+"-"+pair.getValue()+'\n');
+                    it.remove(); // avoids a ConcurrentModificationException
+                }
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } finally {
+                if (output != null) {
+                    try {
+                        output.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }

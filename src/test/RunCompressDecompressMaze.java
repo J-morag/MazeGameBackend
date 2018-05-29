@@ -90,5 +90,8 @@ public class RunCompressDecompressMaze {
 
         Server.Configurations config = new Server.Configurations();
         System.out.println(config.getProperty("GeneratorClass"));
+        config.setProperty("GeneratorClass", "MyMazeGenerator");
+        System.out.println(config.getProperty("GeneratorClass"));
+        config.store();
     }
 }
