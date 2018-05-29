@@ -1,6 +1,7 @@
 package algorithms.mazeGenerators;
 
 
+import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Objects;
@@ -9,7 +10,7 @@ import java.util.Objects;
  * Represents a 2D maze.
  */
 
-public class Maze
+public class Maze implements Serializable
 {
     /**
      * Start position. Represented by 'S' when maze is printed.

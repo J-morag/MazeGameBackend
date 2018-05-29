@@ -24,12 +24,19 @@ public class MyDecompressorInputStream extends InputStream {
     @Override
     public int read(byte[] b) throws IOException {
         return super.read(b);
+//        try {
+//            return decompressInto(b);
+//        } catch (DataFormatException e) {
+//            e.printStackTrace();
+//            System.out.println("Error: Invalid input format");
+//        }
+//        return 0;
     }
 
 //    @Override
 //    public byte[] readAllBytes() throws IOException {
 //        try {
-//            return decompress(super.readAllBytes());
+//            return decompressInto(super.readAllBytes());
 //        } catch (DataFormatException e) {
 //            e.printStackTrace();
 //            System.out.println("Error: Invalid input format");
@@ -37,17 +44,19 @@ public class MyDecompressorInputStream extends InputStream {
 //        return new byte[0];
 //    }
 
-//    private byte[] decompress(byte[] b) throws DataFormatException, IOException {
-//        Inflater inflater = new Inflater();
-//        inflater.setInput(b);
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(b.length);
-//        byte[] buffer = new byte[1024];
-//        while (!inflater.finished()) {
-//            int count = inflater.inflate(buffer);
-//            outputStream.write(buffer, 0, count);
-//        }
-//        outputStream.close();
-//        return outputStream.toByteArray();
-//
-//    }
+    private int decompressInto(byte[] b) throws DataFormatException, IOException {
+        Inflater inflater = new Inflater();
+        inflater.setInput(b);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(b.length);
+        byte[] buffer = new byte[1024];
+        while (!inflater.finished()) {
+            int count = inflater.inflate(buffer);
+            outputStream.write(buffer, 0, count);
+        }
+        outputStream.close();
+        byte[] input = outputStream.toByteArray();
+        System.arraycopy(input, 0, b, 0, b.length);
+        return input.length;
+
+    }
 }
