@@ -10,14 +10,11 @@ import java.util.ArrayList;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 
-    //private int rows;
-    //private int columns;
-    private OutputStream out;
+    //private OutputStream out;
     private IMazeGenerator mazeGenerator;
 
     public ServerStrategyGenerateMaze(int[] measures) {
         mazeGenerator = new SimpleMazeGenerator();
-        //this.out = new OutputStream;
     }
 
     @Override
@@ -26,15 +23,20 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             ObjectInputStream fromClient = new ObjectInputStream(inputStream);
             ObjectOutputStream toClient = new ObjectOutputStream(outputStream);
 
-            //Maze maze = mazeGenerator.generate(rows,columns);
-            //byte[] mazeByteArr = maze.toByteArray();
-            MyCompressorOutputStream compressor = new MyCompressorOutputStream(out);
-            //compressor.write(mazeByteArr);
+            Object arrFromClient = fromClient.readObject();
+            int rows = ((int[])arrFromClient)[0];
+            int columns = ((int[])arrFromClient)[1];
+            Maze maze = mazeGenerator.generate(rows,columns);
+            byte[] mazeByteArr = maze.toByteArray();
+            MyCompressorOutputStream compressor = new MyCompressorOutputStream(outputStream);
+            compressor.write(mazeByteArr);
 
             toClient.flush();
-            toClient.writeObject(out);
+            toClient.writeObject(outputStream);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

@@ -1,13 +1,15 @@
 package Server;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.Iterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.HashMap;
@@ -21,11 +23,13 @@ public class Server {
     private IServerStrategy serverStrategy;
     private volatile boolean stop;
     //private static final Logger LOG = LogManager.getLogger();
+    private ExecutorService TPool;
 
     public Server(int port, int listeningIntervalMS, IServerStrategy serverStrategy) {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.serverStrategy = serverStrategy;
+        TPool = Executors.newCachedThreadPool();
     }
 
     public void start() {
@@ -41,7 +45,8 @@ public class Server {
                 try {
                     Socket clientSocket = serverSocket.accept(); // blocking call
                     //LOG.info(String.format("Client excepted: %s",clientSocket.toString()));
-                    new Thread(() -> {handleClient(clientSocket);}).start();
+                    //Thread runnable = new Thread(() -> {handleClient(clientSocket);}).start();
+                    //TPool.execute(runnable);
                 } catch (SocketTimeoutException e) {
                     //LOG.debug("Socket Timeout - no Client requests!");
                 }
