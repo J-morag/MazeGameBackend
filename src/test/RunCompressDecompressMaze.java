@@ -88,10 +88,15 @@ public class RunCompressDecompressMaze {
         boolean areMazesEquals = Arrays.equals(loadedMaze.toByteArray(),maze.toByteArray());
         System.out.println(String.format("Mazes equal: %s",areMazesEquals)); //maze should be equal to loadedMaze
 
-        Server.Configurations config = new Server.Configurations();
-        System.out.println(config.getProperty("GeneratorClass"));
-        config.setProperty("GeneratorClass", "MyMazeGenerator");
-        System.out.println(config.getProperty("GeneratorClass"));
-        config.store();
+
+
+
+//        System.out.println(Server.Configurations.generatorClass.getCurrValue());
+//        Server.Configurations.load("Resources/config.properties");
+//        System.out.println(Server.Configurations.generatorClass.getCurrValue());
+////        Server.Configurations.setProperty("generatorClass", "MYMAZEGENERATOR");
+//        Server.Configurations.generatorClass.setCurrValue(Server.Configurations.generatorClass.MYMAZEGENERATOR);
+//        System.out.println(Server.Configurations.generatorClass.getCurrValue());
+//        Server.Configurations.store("Resources/config.properties");
     }
 }
