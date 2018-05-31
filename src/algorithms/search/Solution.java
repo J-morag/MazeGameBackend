@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Represents the path from start position to goal position
  */
-public class Solution implements Serializable{
+public class Solution implements Serializable {
 
     private ArrayList<AState> pathList;
 
