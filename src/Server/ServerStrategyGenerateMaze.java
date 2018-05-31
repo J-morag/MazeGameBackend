@@ -4,6 +4,8 @@ import IO.MyCompressorOutputStream;
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
 import algorithms.mazeGenerators.MyMazeGenerator;
+import Server.Server.Configurations;
+import algorithms.mazeGenerators.SimpleMazeGenerator;
 
 import java.io.*;
 
@@ -19,7 +21,18 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             int[] arrFromClient = (int[])(fromClient.readObject());
             int rows = (arrFromClient)[0];
             int columns = (arrFromClient)[1];
-            IMazeGenerator mazeGenerator = new MyMazeGenerator();
+
+            IMazeGenerator mazeGenerator = null;
+
+            Configurations.load("Resources/config.properties");
+
+            if (Configurations.generatorClass.getCurrValue() == Configurations.generatorClass.MYMAZEGENERATOR) {
+                mazeGenerator = new MyMazeGenerator();
+            }
+            else //if (Configurations.generatorClass.getCurrValue() == Configurations.generatorClass.SIMPLEMAZEGENERATOR)
+                mazeGenerator = new SimpleMazeGenerator();
+
+
             Maze maze = mazeGenerator.generate(rows,columns);
             byte[] mazeByteArr = maze.toByteArray();
             ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream();

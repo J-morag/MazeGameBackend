@@ -93,15 +93,19 @@ public class Server {
 
         public static void setProperty(String prop, String value) {
             try{
-                switch (prop){
-                    case "generatorClass":
-                        generatorClass.setCurrValue(generatorClass.valueOf(value));
-                    case "searchAlgorithm":
-                        searchAlgorithm.setCurrValue(searchAlgorithm.valueOf(value));
-                }
+//                switch (prop){
+//                    case "generatorClass":
+//                        generatorClass.setCurrValue(generatorClass.valueOf(value));
+//                    case "searchAlgorithm":
+//                        searchAlgorithm.setCurrValue(searchAlgorithm.valueOf(value));
+//                }
+                if (prop.equals("generatorClass"))
+                    generatorClass.setCurrValue(generatorClass.valueOf(value));
+                else if (prop.equals("searchAlgorithm"))
+                    searchAlgorithm.setCurrValue(searchAlgorithm.valueOf(value));
             }
             catch (IllegalArgumentException e){
-                System.out.println("IllegalArgumentException: attempted to set unrecognized config value " + value + " to field " + prop);
+                System.out.println("attempted to set unrecognized config value " + value + " to field " + prop + ". default value used instead.");
             }
         }
 
