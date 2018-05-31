@@ -1,12 +1,14 @@
 package Server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.HashMap;
@@ -21,16 +23,24 @@ public class Server {
     private volatile boolean stop;
     //private static final Logger LOG = LogManager.getLogger();
     private ExecutorService TPool;
+//    private ServerSocket serverSocket;
+//    private Socket clientSocket;
+//    private  int numOfClients;
 
     public Server(int port, int listeningIntervalMS, IServerStrategy serverStrategy) {
         this.port = port;
         this.listeningIntervalMS = listeningIntervalMS;
         this.serverStrategy = serverStrategy;
         TPool = Executors.newCachedThreadPool();
+//        numOfClients = 0;
+//        serverSocket = null;
+//        clientSocket = null;
     }
 
-    public void start() {
-        new Thread(() -> {runServer();}).start();
+    public void start() throws IOException {
+        new Thread(() -> {
+            runServer();
+        }).start();
     }
 
     public void runServer() {
@@ -40,14 +50,15 @@ public class Server {
             //LOG.info(String.format("Server started (port: %s, listening Interval: %s)",port,listeningIntervalMS));
             while (!stop) {
                 try {
-                    Socket clientSocket = serverSocket.accept(); // blocking call
+                    Socket clientSocket = serverSocket.accept();
                     //LOG.info(String.format("Client excepted: %s",clientSocket.toString()));
-                    //Thread runnable = new Thread(() -> {handleClient(clientSocket);}).start();
-                    //TPool.execute(runnable);
+                    //Thread runnable = new Thread(() -> {handleClient(clientSocket);});
+                    TPool.execute(() -> {handleClient(clientSocket);});
                 } catch (SocketTimeoutException e) {
                     //LOG.debug("Socket Timeout - no Client requests!");
                 }
             }
+            TPool.shutdown();
             serverSocket.close();
         } catch (IOException e) {
             //LOG.error("IOException", e);
@@ -69,6 +80,59 @@ public class Server {
         //LOG.info("Stopping server..");
         stop = true;
     }
+
+//    private static class ServerThread implements Runnable {
+//
+//        Server server=null;
+//        Socket client=null;
+//        BufferedReader cin;
+//        PrintStream cout;
+//        Scanner sc=new Scanner(System.in);
+//        int id;
+//        String s;
+//
+//        ServerThread(Socket client, int count ,Server server ) throws IOException {
+//
+//            this.client=client;
+//            this.server=server;
+//            this.id=count;
+//            System.out.println("Connection "+id+"established with client "+client);
+//            cin=new BufferedReader(new InputStreamReader(client.getInputStream()));
+//            cout=new PrintStream(client.getOutputStream());
+//        }
+//
+//        @Override
+//        public void run() {
+//            int x=1;
+//            try {
+//                while (true) {
+//                    s = cin.readLine();
+//                    System.out.print("Client(" + id + ") :" + s + "\n");
+//                    System.out.print("Server : ");
+//                    //s=stdin.readLine();
+//                    s = sc.nextLine();
+//                    if (s.equalsIgnoreCase("bye")) {
+//                        cout.println("BYE");
+//                        x = 0;
+//                        System.out.println("Connection ended by server");
+//                        break;
+//                    }
+//                    cout.println(s);
+//                }
+//                cin.close();
+//                client.close();
+//                cout.close();
+//                if (x == 0) {
+//                    System.out.println("Server cleaning up.");
+//                    System.exit(0);
+//                }
+//            }
+//            catch(IOException ex) {
+//                System.out.println("Error : " + ex);
+//            }
+//        }
+//    }
+
 
     public static class Configurations{
 

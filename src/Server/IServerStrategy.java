@@ -6,5 +6,5 @@ import java.io.OutputStream;
 
 public interface IServerStrategy {
 
-    void applyStrategy(InputStream inputStream, OutputStream outputStream) throws IOException;
+    void applyStrategy(InputStream inputStream, OutputStream outputStream);
 }

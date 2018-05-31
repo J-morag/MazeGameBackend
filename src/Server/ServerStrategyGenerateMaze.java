@@ -3,37 +3,33 @@ package Server;
 import IO.MyCompressorOutputStream;
 import algorithms.mazeGenerators.IMazeGenerator;
 import algorithms.mazeGenerators.Maze;
-import algorithms.mazeGenerators.SimpleMazeGenerator;
+import algorithms.mazeGenerators.MyMazeGenerator;
 
 import java.io.*;
-import java.util.ArrayList;
 
 public class ServerStrategyGenerateMaze implements IServerStrategy {
 
-    //private OutputStream out;
-    private IMazeGenerator mazeGenerator;
-
-    public ServerStrategyGenerateMaze(int[] measures) {
-        mazeGenerator = new SimpleMazeGenerator();
-    }
-
     @Override
-    public void applyStrategy(InputStream inputStream, OutputStream outputStream) throws IOException {
+    public void applyStrategy(InputStream inputStream, OutputStream outputStream) {
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inputStream);
             ObjectOutputStream toClient = new ObjectOutputStream(outputStream);
+            toClient.flush();
 
-            Object arrFromClient = fromClient.readObject();
-            int rows = ((int[])arrFromClient)[0];
-            int columns = ((int[])arrFromClient)[1];
+            int[] arrFromClient = (int[])(fromClient.readObject());
+            int rows = (arrFromClient)[0];
+            int columns = (arrFromClient)[1];
+            IMazeGenerator mazeGenerator = new MyMazeGenerator();
             Maze maze = mazeGenerator.generate(rows,columns);
             byte[] mazeByteArr = maze.toByteArray();
-            MyCompressorOutputStream compressor = new MyCompressorOutputStream(outputStream);
-            compressor.write(mazeByteArr);
-
-            toClient.flush();
-            toClient.writeObject(outputStream);
-
+            MyCompressorOutputStream compressor = new MyCompressorOutputStream(toClient);
+            try{
+                compressor.write(mazeByteArr);
+                compressor.flush();
+                compressor.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

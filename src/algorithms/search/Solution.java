@@ -1,12 +1,13 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents the path from start position to goal position
  */
-public class Solution {
+public class Solution implements Serializable{
 
     private ArrayList<AState> pathList;
 
