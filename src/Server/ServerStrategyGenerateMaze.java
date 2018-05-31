@@ -39,8 +39,4 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             e.printStackTrace();
         }
     }
-
-
-
-
 }

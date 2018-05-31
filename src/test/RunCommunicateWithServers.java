@@ -35,15 +35,58 @@ public class RunCommunicateWithServers {
         //stringReverserServer.start();
 
         //Communicating with servers
-        //CommunicateWithServer_MazeGenerating();
+        CommunicateWithServer_MazeGenerating();
+//        for(int i=0; i<50; i++){
+//            CommunicateWithServer_SolveSearchProblem();
+//        }
         CommunicateWithServer_SolveSearchProblem();
         CommunicateWithServer_SolveSearchProblem_2();
+        CommunicateWithServer_SolveSearchProblem_3();
         //CommunicateWithServer_StringReverser();
 
         //Stopping all servers
         mazeGeneratingServer.stop();
         solveSearchProblemServer.stop();
         //stringReverserServer.stop();
+    }
+
+    private static void CommunicateWithServer_SolveSearchProblem_3() {
+        try {
+            Client client = new Client(InetAddress.getLocalHost(), 5401, new IClientStrategy() {
+                @Override
+                public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
+                    try {
+                        ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
+                        ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
+                        toServer.flush();
+                        MyMazeGenerator mg = new MyMazeGenerator();
+                        Maze maze = mg.generate(50, 50);
+                        //maze.print();
+//                        int[][] mazeMap = {{1,0,1,1},
+//                                            {0,0,1,1},
+//                                            {1,0,0,1},
+//                                            {0,1,0,0},
+//                                            {1,0,0,1}};
+//                        Maze maze = new Maze(mazeMap, new Position(0,1), new Position(4,2));
+                        toServer.writeObject(maze); //send maze to server
+                        toServer.flush();
+                        Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
+
+                        //Print Maze Solution retrieved from the server
+                        System.out.println(String.format("Solution steps: %s", mazeSolution));
+                        ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
+                        for (int i = 0; i < mazeSolutionSteps.size(); i++) {
+                            System.out.println(String.format("%s. %s", i, mazeSolutionSteps.get(i).toString()));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            client.communicateWithServer();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void CommunicateWithServer_SolveSearchProblem_2() {
@@ -124,7 +167,7 @@ public class RunCommunicateWithServers {
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
                         MyMazeGenerator mg = new MyMazeGenerator();
-                        Maze maze = mg.generate(50, 50);
+                        Maze maze = mg.generate(1000, 1000);
                         //maze.print();
 //                        int[][] mazeMap = {{1,0,0,1},
 //                                {0,0,1,1},
