@@ -22,11 +22,14 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             IMazeGenerator mazeGenerator = new MyMazeGenerator();
             Maze maze = mazeGenerator.generate(rows,columns);
             byte[] mazeByteArr = maze.toByteArray();
-            MyCompressorOutputStream compressor = new MyCompressorOutputStream(toClient);
+            ByteArrayOutputStream byteArrOut = new ByteArrayOutputStream();
+            byteArrOut.flush();
+            MyCompressorOutputStream compressor = new MyCompressorOutputStream(byteArrOut);
             try{
                 compressor.write(mazeByteArr);
-                compressor.flush();
-                compressor.close();
+                toClient.writeObject(byteArrOut.toByteArray());
+                toClient.flush();
+                toClient.close();
             } catch (IOException e){
                 e.printStackTrace();
             }
