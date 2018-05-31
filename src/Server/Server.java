@@ -74,6 +74,8 @@ public class Server {
      * Different configuration fields are defined by the enums(static) contained within.
      * The constructor is private, and all fields are static.
      * Adding new fields is done by adding a new enum to code as a member, adding it to the switch case in setProperty, and to store method.
+     * adding new options to an existing field (enum) is done by adding the new option to the enum.
+     * I'am pretty sure this class is thread safe.
      */
     public static class Configurations{
 
@@ -84,7 +86,7 @@ public class Server {
             public static generatorClass getCurrValue(){return currValue;}
         }
         public enum searchAlgorithm {
-            BESTFIRSTSEARCH, BREADTHFIRSTSEARCH, BEPTHFIRSTSEARCH;
+            BESTFIRSTSEARCH, BREADTHFIRSTSEARCH, DEPTHFIRSTSEARCH, ASTAR;
             static searchAlgorithm currValue = BESTFIRSTSEARCH;
             public static void setCurrValue(searchAlgorithm value) {currValue = value;}
             public static searchAlgorithm getCurrValue(){return currValue;}

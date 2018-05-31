@@ -1,5 +1,6 @@
 package algorithms.search;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -7,10 +8,10 @@ import java.util.Objects;
  * An abstract class. Represents a state.
  * Each state has cost and parent (the state it came from)
  */
-public abstract class AState implements Comparable{
+public abstract class AState implements Comparable, Serializable{
 
     protected double cost;
-    protected AState parent;
+    protected transient AState parent;
 
     /**
      * Constructor. Gets the cost of the state.

@@ -8,8 +8,8 @@ public class SearchableMaze implements ISearchable{
 
     private boolean debug = false;
     private Maze maze;
-    private MazeState startState;
-    private MazeState goalState;
+    protected MazeState startState;
+    protected MazeState goalState;
 
     /**
      * Constructor

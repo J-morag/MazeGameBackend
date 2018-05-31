@@ -1,8 +1,12 @@
 package Server;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import IO.MyCompressorOutputStream;
+import IO.MyDecompressorInputStream;
+import algorithms.mazeGenerators.Maze;
+import algorithms.search.*;
+import Server.Server.Configurations;
+
+import java.io.*;
 
 public class ServerStrategySolveSearchProblem implements IServerStrategy {
     @Override
