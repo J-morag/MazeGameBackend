@@ -11,11 +11,9 @@ import java.util.zip.Deflater;
 public class MyCompressorOutputStream extends OutputStream{
 
     private OutputStream out;
-    private Deflater deflater;
 
     public MyCompressorOutputStream(OutputStream out) {
         this.out = out;
-        this.deflater = new Deflater();
     }
 
     @Override
@@ -27,29 +25,36 @@ public class MyCompressorOutputStream extends OutputStream{
     public void write(byte[] b) throws IOException {
 //        byte[] bArrayDeflated = compress(b);
 //        out.write(bArrayDeflated);
-        out.write(b);
+        out.write(compressMaze(b));
     }
 
-    private byte[] compress(byte[] b) throws IOException {
-        deflater.setInput(b);
-        ByteArrayOutputStream os = new ByteArrayOutputStream(b.length);
-        deflater.finish();
-        byte[] buffer = new byte[1024];
-        while (!deflater.finished()) {
-            int count = deflater.deflate(buffer); // returns the generated code... index
-            os.write(buffer, 0, count);
+    private byte[] compressMaze(byte[] b){
+        byte[] byteArr = new byte[24 + (int)Math.ceil((b.length-24)/8.0)];
+        System.arraycopy(b, 0, byteArr, 0, 24);
+        int byteArrIndex = 24;
+        byte nextByte = 0x00;
+        for (int i = 24; i < b.length;) {
+
+            // 10000000 is -124
+            if (1 == b[i]) nextByte += (byte)-128;
+            int j = 1;
+            i++;
+
+            //now go over the next 7 maze locations
+            int divByTwo = 64; // 01000000 is 64, 00100000 is 32...
+            for (; j%8 != 0 && i < b.length; j++){
+                if (1 == b[i]) nextByte += divByTwo;
+                divByTwo /= 2;
+                i++;
+            }
+
+            byteArr[byteArrIndex] = nextByte;
+            byteArrIndex++;
+            nextByte = 0x00;
         }
-        os.close();
-        return os.toByteArray();
+        return byteArr;
     }
 
-//    /**
-//     * converts integer to 2's complement array of bytes. byte[1] contains the MSB.
-//     * @param integer - integer to convert.
-//     * @return byte array size 4 representing the integer.
-//     */
-//    private static byte[] intToByteArray(int integer){
-//        return ByteBuffer.allocate(4).putInt(integer).array();
-//    }
+
 
 }

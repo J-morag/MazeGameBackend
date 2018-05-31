@@ -1,10 +1,9 @@
 package Server;
 
 import algorithms.mazeGenerators.Maze;
-import algorithms.search.BreadthFirstSearch;
-import algorithms.search.ISearchingAlgorithm;
-import algorithms.search.SearchableMaze;
-import algorithms.search.Solution;
+import algorithms.search.*;
+import Server.Server.Configurations;
+
 
 import java.io.*;
 import java.nio.file.Files;
@@ -25,7 +24,25 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
             byte[] mazeByteArr = mazeFromClient.toByteArray();
             int hashCodeMaze = Arrays.hashCode(mazeByteArr);
             SearchableMaze searchableMaze = new SearchableMaze(mazeFromClient);
-            ISearchingAlgorithm searcher = new BreadthFirstSearch();
+
+            SearchableMaze searchableProblem = new SearchableMaze(mazeFromClient);
+
+            ISearchingAlgorithm searcher = null;
+
+            Configurations.load("Resources/config.properties");
+
+            if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BESTFIRSTSEARCH)
+                searcher = new BestFirstSearch();
+            else if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BREADTHFIRSTSEARCH)
+                searcher = new BreadthFirstSearch();
+            else if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.DEPTHFIRSTSEARCH)
+                searcher = new DepthFirstSearch();
+            else {
+                //if(Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.ASTAR)
+                searcher = new BestFirstSearch();
+                searchableProblem = new HeuristicSearchableMaze(mazeFromClient);
+            }
+
             String tempDirectoryPath = System.getProperty("java.io.tmpdir");
             try{
                 Solution solution = isSolutionExist(tempDirectoryPath,hashCodeMaze);

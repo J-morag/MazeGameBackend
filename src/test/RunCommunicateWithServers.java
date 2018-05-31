@@ -35,9 +35,9 @@ public class RunCommunicateWithServers {
         //stringReverserServer.start();
 
         //Communicating with servers
-        //CommunicateWithServer_MazeGenerating();
-        CommunicateWithServer_SolveSearchProblem();
-        CommunicateWithServer_SolveSearchProblem_2();
+        CommunicateWithServer_MazeGenerating();
+//        CommunicateWithServer_SolveSearchProblem();
+//        CommunicateWithServer_SolveSearchProblem_2();
         //CommunicateWithServer_StringReverser();
 
         //Stopping all servers
@@ -94,7 +94,7 @@ public class RunCommunicateWithServers {
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
-                        int[] mazeDimensions = new int[]{1000, 1000};
+                        int[] mazeDimensions = new int[]{50, 50};
                         toServer.writeObject(mazeDimensions); //send maze dimensions to server
                         toServer.flush();
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
@@ -102,7 +102,7 @@ public class RunCommunicateWithServers {
                         byte[] decompressedMaze = new byte[150000 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                         is.read(decompressedMaze); //Fill decompressedMaze with bytes
                         Maze maze = new Maze(decompressedMaze);
-                        //maze.print();
+                        maze.print();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

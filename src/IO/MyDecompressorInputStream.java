@@ -1,5 +1,7 @@
 package IO;
 
+import algorithms.mazeGenerators.Maze;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,11 +11,9 @@ import java.util.zip.Inflater;
 public class MyDecompressorInputStream extends InputStream {
 
     private InputStream in;
-    private Inflater inflater;
 
     public MyDecompressorInputStream(InputStream in) {
         this.in = in;
-        this.inflater = new Inflater();
     }
 
     @Override
@@ -23,40 +23,50 @@ public class MyDecompressorInputStream extends InputStream {
 
     @Override
     public int read(byte[] b) throws IOException {
-        return super.read(b);
-//        try {
-//            return decompressInto(b);
-//        } catch (DataFormatException e) {
-//            e.printStackTrace();
-//            System.out.println("Error: Invalid input format");
-//        }
-//        return 0;
+        int compressedSize = super.read(b);
+        byte[] compressedMaze = new byte[compressedSize];
+        System.arraycopy(b, 0, compressedMaze, 0, compressedSize);
+        byte[] decompressedMaze = decompressMaze(compressedMaze);
+        System.arraycopy(decompressedMaze, 0, b, 0, decompressedMaze.length);
+        return decompressedMaze.length;
     }
 
-//    @Override
-//    public byte[] readAllBytes() throws IOException {
-//        try {
-//            return decompressInto(super.readAllBytes());
-//        } catch (DataFormatException e) {
-//            e.printStackTrace();
-//            System.out.println("Error: Invalid input format");
-//        }
-//        return new byte[0];
-//    }
 
-    private int decompressInto(byte[] b) throws DataFormatException, IOException {
-        Inflater inflater = new Inflater();
-        inflater.setInput(b);
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream(b.length);
-        byte[] buffer = new byte[1024];
-        while (!inflater.finished()) {
-            int count = inflater.inflate(buffer);
-            outputStream.write(buffer, 0, count);
+    /**
+     * @param compressedBytes - compressed maze
+     * @return a decompressed maze
+     */
+    private byte[] decompressMaze(byte[] compressedBytes){
+
+        byte[] rowsB = new byte[4];
+        byte[] columnsB = new byte[4];
+
+        System.arraycopy(compressedBytes, 0, rowsB, 0, 4);
+        System.arraycopy(compressedBytes, 4, columnsB, 0, 4);
+
+        int rows = Maze.byteArrayToInt(rowsB);
+        int columns = Maze.byteArrayToInt(columnsB);
+
+        byte[] decompressedBytes = new byte[24 + rows*columns];
+        System.arraycopy(compressedBytes, 0 , decompressedBytes, 0, 24);
+        int byteArrIndex = 24;
+        for (int i = 24; i < compressedBytes.length; i++) {
+
+            boolean MSB_isOn = ( compressedBytes[i] & (byte)-128 ) != 0;
+            if (MSB_isOn) decompressedBytes[byteArrIndex] = 1;
+            int j = 1;
+            byteArrIndex++;
+
+            //now go over the next 7 maze locations
+            int divMeByTwo = 64; // 01000000 is 64, 00100000 is 32...
+            for (; j%8 != 0 && i < compressedBytes.length; j++){ //notice  i < compressedBytes.length is i not j
+                boolean bitIsOn = ( compressedBytes[i] & (byte)divMeByTwo ) != 0;
+                if (bitIsOn)
+                    decompressedBytes[byteArrIndex] = 1;
+                divMeByTwo /= 2;
+                byteArrIndex++;
+            }
         }
-        outputStream.close();
-        byte[] input = outputStream.toByteArray();
-        System.arraycopy(input, 0, b, 0, b.length);
-        return input.length;
-
+        return decompressedBytes;
     }
 }

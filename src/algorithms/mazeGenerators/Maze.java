@@ -125,25 +125,33 @@ public class Maze implements Serializable
      * @return a decoded maze map (int[][])
      */
     private int[][] buildMazeMapFromByteArr(byte[] byteEncoding,int bytesArrayIndex, int numRows, int numColumns){
+//        int[][] mazeMap = new int[numRows][numColumns];
+//        for (int i = 0; i < numRows ; i++) {
+//            for (int j = 0; j < numColumns;) {
+//                boolean MSB_isOn = ( byteEncoding[bytesArrayIndex] & (byte)-128 ) != 0;
+//                if (MSB_isOn) mazeMap[i][j] = 1;
+//                j++;
+//
+//                //now go over the next 7 maze locations
+//                int divMeByTwo = 64; // 01000000 is 64, 00100000 is 32...
+//                for (; j%8 != 0 && j < mazeMap[0].length; j++){
+//                    boolean bitIsOn = ( byteEncoding[bytesArrayIndex] & (byte)divMeByTwo ) != 0;
+//                    if (bitIsOn) mazeMap[i][j] = 1;
+//                    divMeByTwo /= 2;
+//                }
+//
+//                bytesArrayIndex++;
+//            }
+//
+//        }
         int[][] mazeMap = new int[numRows][numColumns];
         for (int i = 0; i < numRows ; i++) {
-            for (int j = 0; j < numColumns;) {
-                boolean MSB_isOn = ( byteEncoding[bytesArrayIndex] & (byte)-128 ) != 0;
-                if (MSB_isOn) mazeMap[i][j] = 1;
-                j++;
-
-                //now go over the next 7 maze locations
-                int divMeByTwo = 64; // 01000000 is 64, 00100000 is 32...
-                for (; j%8 != 0 && j < mazeMap[0].length; j++){
-                    boolean bitIsOn = ( byteEncoding[bytesArrayIndex] & (byte)divMeByTwo ) != 0;
-                    if (bitIsOn) mazeMap[i][j] = 1;
-                    divMeByTwo /= 2;
-                }
-
+            for (int j = 0; j < numColumns; j++) {
+                mazeMap[i][j] = byteEncoding[bytesArrayIndex];
                 bytesArrayIndex++;
             }
-
         }
+
         return mazeMap;
     }
 
@@ -170,14 +178,14 @@ public class Maze implements Serializable
      * first set of 4 bytes represent the number of rows (int), next set is columns, start row, start column,
      * end row, end column.
      *
-     * index 12 onwards represent the contents of the maze.
+     * index 24 onwards represent the contents of the maze.
      * if the (number of columns % 8 != 0) , the byte at the end of each row will end in (#columns % 8) 0's.
      * @return a byte[] encoding of the maze
      */
     public byte[] toByteArray(){
         int numRows = mazeMap.length, numColumns=mazeMap[0].length;
         int arraySize = 4 /*num rows*/ + 4 /*num columns*/ + 4 /*start row*/ + 4 /*start column*/ + 4 /*end row*/ + 4 /*end column*/;
-        int numBytesToRepresentMazeContent = numRows * (int)Math.ceil(numColumns/8.0);
+        int numBytesToRepresentMazeContent = getNumBytesToRepresentMazeContent(numRows, numColumns);
         arraySize += numBytesToRepresentMazeContent;
         byte[] mazeAsByteArray = new byte[arraySize];
         int index = 0;
@@ -193,9 +201,15 @@ public class Maze implements Serializable
         index += 4;
         System.arraycopy(intToByteArray(goalPosition.getColumnIndex()), 0, mazeAsByteArray, index, 4);
         index += 4;
-        byte[] mazeMapAsByteArr = mazeMapToByteArray();
+//        byte[] mazeMapAsByteArr = mazeMapToByteArray();
+        byte[] mazeMapAsByteArr = mazeMapToSimpleByteArray();
         System.arraycopy(mazeMapAsByteArr, 0, mazeAsByteArray, index, mazeMapAsByteArr.length);
         return mazeAsByteArray;
+    }
+
+    private int getNumBytesToRepresentMazeContent(int numRows, int numColumns) {
+//        numRows * (int)Math.ceil(numColumns/8.0);
+         return numRows * numColumns;
     }
 
     /**
@@ -221,7 +235,7 @@ public class Maze implements Serializable
      * if the (number of columns % 8 != 0) , the byte at the end of each row will end in (#columns % 8) 0's.
      * @return byte[] representing the maze map.
      */
-    public byte[] mazeMapToByteArray(){
+    private byte[] mazeMapToByteArray(){
         byte[] byteArr = new byte[mazeMap.length * (int)Math.ceil(mazeMap[0].length/8.0)];
         int byteArrIndex = 0;
         byte nextByte = 0x00;
@@ -243,6 +257,18 @@ public class Maze implements Serializable
                 nextByte = 0x00;
             }
 
+        }
+        return byteArr;
+    }
+
+    private byte[] mazeMapToSimpleByteArray(){
+        byte[] byteArr = new byte[mazeMap.length * mazeMap[0].length];
+        int byteArrIndex = 0;
+        for (int i = 0; i < mazeMap.length; i++) { //rows
+            for (int j = 0; j < mazeMap[0].length; j++) { //inside row (columns)
+                byteArr[byteArrIndex] = (mazeMap[i][j] == 0) ? (byte)0 : (byte)1;
+                byteArrIndex++;
+            }
         }
         return byteArr;
     }
