@@ -15,15 +15,15 @@ import java.util.Arrays;
 public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
     @Override
-    public void applyStrategy(InputStream inputStream, OutputStream outputStream) {
+    public synchronized void applyStrategy(InputStream inputStream, OutputStream outputStream) {
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inputStream);
             ObjectOutputStream toClient = new ObjectOutputStream(outputStream);
             toClient.flush();
             Maze mazeFromClient = (Maze)(fromClient.readObject());
-            int hashCodeMaze = mazeFromClient.hashCode();
-            //byte[] mazeByteArr = mazeFromClient.toByteArray();
-            //hashCodeMaze = Arrays.hashCode(mazeByteArr);
+            //int hashCodeMaze = mazeFromClient.hashCode();
+            byte[] mazeByteArr = mazeFromClient.toByteArray();
+            int hashCodeMaze = Arrays.hashCode(mazeByteArr);
             SearchableMaze searchableMaze = new SearchableMaze(mazeFromClient);
             ISearchingAlgorithm searcher = new BreadthFirstSearch();
             String tempDirectoryPath = System.getProperty("java.io.tmpdir");
