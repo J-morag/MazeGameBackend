@@ -75,14 +75,14 @@ public class Server {
     public static class Configurations{
 
         public enum generatorClass {
-            MYMAZEGENERATOR, SIMPLEMAZEGENERATOR;
-            static generatorClass currValue = MYMAZEGENERATOR;
+            MyMazeGenerator, SimpleMazeGenerator;
+            static generatorClass currValue = MyMazeGenerator;
             public static void setCurrValue(generatorClass value) {currValue = value;}
             public static generatorClass getCurrValue(){return currValue;}
         }
         public enum searchAlgorithm {
-            BESTFIRSTSEARCH, BREADTHFIRSTSEARCH, DEPTHFIRSTSEARCH, ASTAR;
-            static searchAlgorithm currValue = BESTFIRSTSEARCH;
+            BestFirstSearch, BreadthFirstSearch, DepthFirstSearch, AStar;
+            static searchAlgorithm currValue = BestFirstSearch;
             public static void setCurrValue(searchAlgorithm value) {currValue = value;}
             public static searchAlgorithm getCurrValue(){return currValue;}
         }

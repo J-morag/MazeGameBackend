@@ -31,14 +31,14 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
             Configurations.load("Resources/config.properties");
 
-            if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BESTFIRSTSEARCH)
+            if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BestFirstSearch)
                 searcher = new BestFirstSearch();
-            else if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BREADTHFIRSTSEARCH)
+            else if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BreadthFirstSearch)
                 searcher = new BreadthFirstSearch();
-            else if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.DEPTHFIRSTSEARCH)
+            else if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.DepthFirstSearch)
                 searcher = new DepthFirstSearch();
             else {
-                //if(Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.ASTAR)
+                //if(Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.AStar)
                 searcher = new BestFirstSearch();
                 searchableProblem = new HeuristicSearchableMaze(mazeFromClient);
             }

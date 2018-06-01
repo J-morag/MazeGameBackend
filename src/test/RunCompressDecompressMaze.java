@@ -21,7 +21,7 @@ public class RunCompressDecompressMaze {
         AMazeGenerator mazeGenerator = new MyMazeGenerator();
         Maze maze = mazeGenerator.generate(100, 100); //Generate new maze
 //
-//         maze = new Maze(new int[][]{
+//        Maze maze = new Maze(new int[][]{
 //                {1,1,0,0,0,0,1,0,0,0},
 //                {0,0,0,0,0,1,0,0,0,0},
 //                {0,0,0,0,1,0,0,0,0,0},
@@ -43,7 +43,7 @@ public class RunCompressDecompressMaze {
 //        System.out.println(System.currentTimeMillis() - time);
 //
 //        System.out.println(maze.equals(mazeEncodedDecoded));
-//
+
 //        byte[] byteArr = maze1.mazeMapToByteArray();
 //
 //        for (int i=0; i< byteArr.length; i++) {
@@ -85,8 +85,7 @@ public class RunCompressDecompressMaze {
 //        System.arraycopy(savedMazeBytesSecondHalf, 0, savedMazeBytes, maze.toByteArray().length/2, (int)Math.ceil(maze.toByteArray().length/2.0));
 
         Maze loadedMaze = new Maze(savedMazeBytes);
-//        maze.print();
-//        loadedMaze.print();
+        loadedMaze.print();
         boolean areMazesEquals = Arrays.equals(loadedMaze.toByteArray(),maze.toByteArray());
         System.out.println(String.format("Mazes equal: %s",areMazesEquals)); //maze should be equal to loadedMaze
 
@@ -96,8 +95,8 @@ public class RunCompressDecompressMaze {
 //        System.out.println(Server.Configurations.generatorClass.getCurrValue());
 //        Server.Configurations.load("Resources/config.properties");
 //        System.out.println(Server.Configurations.generatorClass.getCurrValue());
-////        Server.Configurations.setProperty("generatorClass", "MYMAZEGENERATOR");
-//        Server.Configurations.generatorClass.setCurrValue(Server.Configurations.generatorClass.MYMAZEGENERATOR);
+////        Server.Configurations.setProperty("generatorClass", "MyMazeGenerator");
+//        Server.Configurations.generatorClass.setCurrValue(Server.Configurations.generatorClass.MyMazeGenerator);
 //        System.out.println(Server.Configurations.generatorClass.getCurrValue());
 //        Server.Configurations.store("Resources/config.properties");
     }

@@ -22,14 +22,20 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             int rows = (arrFromClient)[0];
             int columns = (arrFromClient)[1];
 
-            IMazeGenerator mazeGenerator = null;
 
             Configurations.load("Resources/config.properties");
+            IMazeGenerator mazeGenerator = null;
+//            try{
+//                mazeGenerator = (IMazeGenerator)Class.forName(Configurations.generatorClass.getCurrValue().toString()).getDeclaredConstructor().newInstance();
+//            }
+//            catch (Exception e){
+//                mazeGenerator = new MyMazeGenerator();
+//            }
 
-            if (Configurations.generatorClass.getCurrValue() == Configurations.generatorClass.MYMAZEGENERATOR) {
+            if (Configurations.generatorClass.getCurrValue() == Configurations.generatorClass.MyMazeGenerator) {
                 mazeGenerator = new MyMazeGenerator();
             }
-            else //if (Configurations.generatorClass.getCurrValue() == Configurations.generatorClass.SIMPLEMAZEGENERATOR)
+            else //if (Configurations.generatorClass.getCurrValue() == Configurations.generatorClass.SimpleMazeGenerator)
                 mazeGenerator = new SimpleMazeGenerator();
 
 

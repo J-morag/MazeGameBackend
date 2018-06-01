@@ -145,8 +145,8 @@ public class Maze implements Serializable
 //
 //        }
         int[][] mazeMap = new int[numRows][numColumns];
-        for (int i = 0; i < numRows ; i++) {
-            for (int j = 0; j < numColumns; j++) {
+        for (int i = 0; i < numRows && bytesArrayIndex<byteEncoding.length ; i++) {
+            for (int j = 0; j < numColumns && bytesArrayIndex<byteEncoding.length; j++) {
                 mazeMap[i][j] = byteEncoding[bytesArrayIndex];
                 bytesArrayIndex++;
             }
@@ -284,27 +284,27 @@ public class Maze implements Serializable
 
     @Override
     public String toString() {
-        String ans = "";
+        StringBuilder sb = new StringBuilder();
         int sRow = startPosition.getRowIndex();
         int sColumn = startPosition.getColumnIndex();
         int eRow = goalPosition.getRowIndex();
         int eColumn = goalPosition.getColumnIndex();
-        for (int j=0; j<mazeMap.length+1 ; j++) System.out.print("~ ");
-        ans += '\n';
+        for (int j=0; j<mazeMap.length+1 ; j++) sb.append("~ ");
+        sb.append('\n');
         for (int i=0; i<mazeMap.length ; i++){
-            ans += "| ";
+            sb.append("| ");
             for (int j=0; j<mazeMap[0].length ; j++){
-                if(i==sRow && j==sColumn) ans += "S";
-                else if(i==eRow && j==eColumn) ans += "E";
-                else if(0 == mazeMap[i][j]) ans += " ";
-                else ans += '+';
-                ans += ' ';
+                if(i==sRow && j==sColumn) sb.append('S');
+                else if(i==eRow && j==eColumn) sb.append('E');
+                else if(0 == mazeMap[i][j]) sb.append(' ');
+                else sb.append('+');
+                sb.append(' ');
             }
-            ans += "|\n";
+            sb.append("|\n");
         }
-        for (int j=0; j<mazeMap.length+1 ; j++) ans += "~ ";
-        ans += '\n';
-        return ans;
+        for (int j=0; j<mazeMap.length+1 ; j++) sb.append("~ ");
+        sb.append('\n');
+        return sb.toString();
     }
 
     @Override
