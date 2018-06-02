@@ -14,7 +14,7 @@ import java.util.Arrays;
 public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
     @Override
-    public synchronized void applyStrategy(InputStream inputStream, OutputStream outputStream) {
+    public void applyStrategy(InputStream inputStream, OutputStream outputStream) {
         try {
             ObjectInputStream fromClient = new ObjectInputStream(inputStream);
             ObjectOutputStream toClient = new ObjectOutputStream(outputStream);

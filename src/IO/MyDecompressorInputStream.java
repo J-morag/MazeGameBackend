@@ -31,7 +31,7 @@ public class MyDecompressorInputStream extends InputStream {
             System.arraycopy(decompressedMaze, 0, b, 0, decompressedMaze.length);
         }catch (ArrayIndexOutOfBoundsException e){
             System.out.println("Error: buffer byte array was too small for decompressed maze. Provide a larger buffer.");
-            e.printStackTrace();
+//            e.printStackTrace();
         }
         return decompressedMaze.length;
     }

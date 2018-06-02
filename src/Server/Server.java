@@ -26,7 +26,7 @@ public class Server {
         TPool = Executors.newCachedThreadPool();
     }
 
-    public void start() throws IOException {
+    public void start() {
         new Thread(() -> {
             runServer();
         }).start();
