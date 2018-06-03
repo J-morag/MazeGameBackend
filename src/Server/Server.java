@@ -46,16 +46,16 @@ public class Server {
             TPool.shutdown();
             serverSocket.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
     private void handleClient(Socket clientSocket) {
         try {
             serverStrategy.applyStrategy(clientSocket.getInputStream(), clientSocket.getOutputStream());
-            clientSocket.getInputStream().close();
-            clientSocket.getOutputStream().close();
             clientSocket.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

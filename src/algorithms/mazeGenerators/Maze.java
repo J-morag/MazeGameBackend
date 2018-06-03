@@ -289,7 +289,7 @@ public class Maze implements Serializable
         int sColumn = startPosition.getColumnIndex();
         int eRow = goalPosition.getRowIndex();
         int eColumn = goalPosition.getColumnIndex();
-        for (int j=0; j<mazeMap.length+1 ; j++) sb.append("~ ");
+        for (int j=0; j<mazeMap[0].length+2 ; j++) sb.append("~ ");
         sb.append('\n');
         for (int i=0; i<mazeMap.length ; i++){
             sb.append("| ");
@@ -302,7 +302,7 @@ public class Maze implements Serializable
             }
             sb.append("|\n");
         }
-        for (int j=0; j<mazeMap.length+1 ; j++) sb.append("~ ");
+        for (int j=0; j<mazeMap[0].length+2 ; j++) sb.append("~ ");
         sb.append('\n');
         return sb.toString();
     }

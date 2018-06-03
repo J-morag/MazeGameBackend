@@ -12,15 +12,11 @@ import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Aviadjo on 3/27/2017.
  */
 public class RunCommunicateWithServers {
-    private static Random rand = new Random();
-    private static final int bound = 1000;
-    private static int i;
     public static void main(String[] args) {
         //Initializing servers
         Server mazeGeneratingServer = new Server(5400, 1000, new ServerStrategyGenerateMaze());
@@ -31,29 +27,11 @@ public class RunCommunicateWithServers {
         solveSearchProblemServer.start();
         mazeGeneratingServer.start();
         //stringReverserServer.start();
-        ArrayList<Thread> threads = new ArrayList<>();
-        for (int i = 0; i < 20 ; i++) {
-            //Communicating with servers
-            Thread client = null;
-            client = new Thread(() -> CommunicateWithServer_MazeGenerating());
-            threads.add(client);
-            System.out.println("started generator " + i);
-            client.start();
-            client = new Thread (() -> CommunicateWithServer_SolveSearchProblem());
-            threads.add(client);
-            System.out.println("started solver " + i);
-            client.start();
-            //CommunicateWithServer_StringReverser();
-        }
 
-        for (Thread t:
-             threads) {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        //Communicating with servers
+        CommunicateWithServer_MazeGenerating();
+        CommunicateWithServer_SolveSearchProblem();
+        //CommunicateWithServer_StringReverser();
 
         //Stopping all servers
         mazeGeneratingServer.stop();
@@ -70,16 +48,15 @@ public class RunCommunicateWithServers {
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
-                        int[] mazeDimensions = new int[]{rand.nextInt(bound), rand.nextInt(bound)};
+                        int[] mazeDimensions = new int[]{50, 50};
                         toServer.writeObject(mazeDimensions); //send maze dimensions to server
                         toServer.flush();
                         byte[] compressedMaze = (byte[]) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
                         InputStream is = new MyDecompressorInputStream(new ByteArrayInputStream(compressedMaze));
-                        byte[] decompressedMaze = new byte[1000024 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
+                        byte[] decompressedMaze = new byte[1000 /*CHANGE SIZE ACCORDING TO YOU MAZE SIZE*/]; //allocating byte[] for the decompressed maze -
                         is.read(decompressedMaze); //Fill decompressedMaze with bytes
                         Maze maze = new Maze(decompressedMaze);
-//                        maze.print();
-                        System.out.println("generated " + i++);
+                        maze.print();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -97,24 +74,22 @@ public class RunCommunicateWithServers {
                 @Override
                 public void clientStrategy(InputStream inFromServer, OutputStream outToServer) {
                     try {
-                        Thread.sleep(10);
                         ObjectOutputStream toServer = new ObjectOutputStream(outToServer);
                         ObjectInputStream fromServer = new ObjectInputStream(inFromServer);
                         toServer.flush();
                         MyMazeGenerator mg = new MyMazeGenerator();
-                        Maze maze = mg.generate(rand.nextInt(bound), rand.nextInt(bound));
-//                        maze.print();
+                        Maze maze = mg.generate(50, 50);
+                        maze.print();
                         toServer.writeObject(maze); //send maze to server
                         toServer.flush();
                         Solution mazeSolution = (Solution) fromServer.readObject(); //read generated maze (compressed with MyCompressor) from server
 
                         //Print Maze Solution retrieved from the server
-//                        System.out.println(String.format("Solution steps: %s", mazeSolution));
-//                        ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
-//                        for (int i = 0; i < mazeSolutionSteps.size(); i++) {
-//                            System.out.println(String.format("%s. %s", i, mazeSolutionSteps.get(i).toString()));
-//                        }
-                        System.out.println("solved " + i++);
+                        System.out.println(String.format("Solution steps: %s", mazeSolution));
+                        ArrayList<AState> mazeSolutionSteps = mazeSolution.getSolutionPath();
+                        for (int i = 0; i < mazeSolutionSteps.size(); i++) {
+                            System.out.println(String.format("%s. %s", i, mazeSolutionSteps.get(i).toString()));
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
