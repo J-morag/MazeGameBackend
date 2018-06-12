@@ -23,7 +23,7 @@ public class ServerStrategyGenerateMaze implements IServerStrategy {
             int columns = (arrFromClient)[1];
 
 
-            Configurations.load("Resources/config.properties");
+            Configurations.load("resources/config.properties");
             IMazeGenerator mazeGenerator = null;
 //            try{
 //                mazeGenerator = (IMazeGenerator)Class.forName(Configurations.generatorClass.getCurrValue().toString()).getDeclaredConstructor().newInstance();

@@ -29,7 +29,7 @@ public class ServerStrategySolveSearchProblem implements IServerStrategy {
 
             ISearchingAlgorithm searcher = null;
 
-            Configurations.load("Resources/config.properties");
+            Configurations.load("resources/config.properties");
 
             if (Configurations.searchAlgorithm.getCurrValue() == Configurations.searchAlgorithm.BestFirstSearch)
                 searcher = new BestFirstSearch();
